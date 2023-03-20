@@ -29,33 +29,36 @@ partial class Form1
     private void InitializeComponent()
     {
         System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-        textBox1 = new TextBox();
+        search_box = new TextBox();
         SuspendLayout();
         // 
-        // textBox1
+        // search_box
         // 
-        textBox1.Location = new Point(245, 98);
-        textBox1.Name = "textBox1";
-        textBox1.Size = new Size(353, 23);
-        textBox1.TabIndex = 0;
+        search_box.BorderStyle = BorderStyle.None;
+        search_box.Cursor = Cursors.IBeam;
+        search_box.Location = new Point(245, 98);
+        search_box.Margin = new Padding(5, 3, 5, 3);
+        search_box.Name = "search_box";
+        search_box.Size = new Size(353, 16);
+        search_box.TabIndex = 0;
         // 
-        // Form1
+        // Background
         // 
         AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
         BackColor = Color.White;
         BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
         ClientSize = new Size(720, 512);
-        Controls.Add(textBox1);
+        Controls.Add(search_box);
         FormBorderStyle = FormBorderStyle.None;
         Name = "Form1";
-        Text = "Form1";
-        Load += Form1_Load;
+        Text = "Background";
+        Load += Form_Load;
         ResumeLayout(false);
         PerformLayout();
     }
 
     #endregion
 
-    private TextBox textBox1;
+    private TextBox search_box;
 }
