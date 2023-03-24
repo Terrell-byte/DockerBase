@@ -23,3 +23,8 @@ body {
     background-size: cover;
     background-repeat: no-repeat;
 }
+
+logo_img {
+    width: 50%;
+    height: 50%;
+}
