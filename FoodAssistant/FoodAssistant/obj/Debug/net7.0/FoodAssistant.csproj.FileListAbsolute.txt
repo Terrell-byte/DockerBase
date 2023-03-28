@@ -826,3 +826,4 @@ C:\Users\Danie\source\repos\Terrell-byte\FoodAssistant\FoodAssistant\FoodAssista
 C:\Users\Danie\source\repos\Terrell-byte\FoodAssistant\FoodAssistant\FoodAssistant\obj\Debug\net7.0\refint\FoodAssistant.dll
 C:\Users\Danie\source\repos\Terrell-byte\FoodAssistant\FoodAssistant\FoodAssistant\obj\Debug\net7.0\FoodAssistant.pdb
 C:\Users\Danie\source\repos\Terrell-byte\FoodAssistant\FoodAssistant\FoodAssistant\obj\Debug\net7.0\ref\FoodAssistant.dll
+C:\Users\Danie\source\repos\Terrell-byte\FoodAssistant\FoodAssistant\FoodAssistant\bin\Debug\net7.0\libman.json
