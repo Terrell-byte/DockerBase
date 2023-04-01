@@ -18,3 +18,23 @@ main[b-qq9plkpj2h] {
     position: fixed;
     background-color: #FFFFFF;
 }
+.navbar ul[b-zhnvm6qbmp] {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo[b-zhnvm6qbmp] {
+    text-align: center;
+    display: flex;
+    transition: all 0.3s ease;
+}
+.logo img[b-zhnvm6qbmp] {
+    width: 3rem;
+    height: 3rem;
+    object-fit: contain;
+}

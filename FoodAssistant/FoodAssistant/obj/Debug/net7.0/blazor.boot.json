@@ -198,13 +198,13 @@
       "mscorlib.dll": "sha256-3H8zsATEgIcRSRoZhWYtgfKT5VniJvhcYxLruf8koAY=",
       "netstandard.dll": "sha256-bbx+pnJNmXZyPqAgESJnWLJsbfuAl0UflLCdl9slPYE=",
       "System.Private.CoreLib.dll": "sha256-pUYF+nr8SzfBMCLc3FM2i\/YivXJlzztdLin+aUsoqP0=",
-      "FoodAssistant.dll": "sha256-qymHiKb3C+Zk9o3oTtIzWM60l7YQGspamZaIPeD0ORw="
+      "FoodAssistant.dll": "sha256-zGHzGn1Fr30UxFR\/fvNcM1KDVTwZbWdYt9nXInTugjA="
     },
     "extensions": null,
     "lazyAssembly": null,
     "libraryInitializers": null,
     "pdb": {
-      "FoodAssistant.pdb": "sha256-EhrxfTR+nDKW7IncTSBesNJ9h0coE9ckjz4KV+gkuw4="
+      "FoodAssistant.pdb": "sha256-P+2JGdKxtvHszcs8bhpIUIsBTsLHZb6NdFSqIPZq8lc="
     },
     "runtime": {
       "dotnet.7.0.4.33vjw9uxws.js": "sha256-3l+4ZYRWpGMbBjNqeIqO9T\/65euaOzIvRlVX2SySvFQ=",
