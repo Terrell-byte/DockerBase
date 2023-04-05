@@ -35,6 +35,7 @@
     transition: all 0.3s ease;
     margin-bottom: 1rem;
     width: 100%;
+    display: none;
 }
 
 .logo {
@@ -47,4 +48,13 @@
     width: 3rem;
     height: 3rem;
     object-fit: contain;
+}
+.navbar:hover a {
+    display:block
+}
+.navbar:hover {
+    width: 10rem; 
+}
+.navbar a:hover {
+    color: #FFC107;
 }

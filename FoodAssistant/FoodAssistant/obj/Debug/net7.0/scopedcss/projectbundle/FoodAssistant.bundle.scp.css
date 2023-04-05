@@ -49,6 +49,7 @@ main[b-qq9plkpj2h] {
     transition: all 0.3s ease;
     margin-bottom: 1rem;
     width: 100%;
+    display: none;
 }
 
 .logo[b-zhnvm6qbmp] {
@@ -61,4 +62,13 @@ main[b-qq9plkpj2h] {
     width: 3rem;
     height: 3rem;
     object-fit: contain;
+}
+.navbar:hover a[b-zhnvm6qbmp] {
+    display:block
+}
+.navbar:hover[b-zhnvm6qbmp] {
+    width: 10rem; 
+}
+.navbar a:hover[b-zhnvm6qbmp] {
+    color: #FFC107;
 }
