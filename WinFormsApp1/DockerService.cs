@@ -1,7 +1,7 @@
 ﻿using Docker.DotNet;
 using Docker.DotNet.Models;
 
-namespace WinFormsApp1
+namespace DockerBase
 {
     public class DockerService
     {
@@ -32,8 +32,6 @@ namespace WinFormsApp1
             };
 
             await DockerClient.Images.CreateImageAsync(imageCreateParameters, null, new Progress<JSONMessage>(), CancellationToken.None);
-
-            Console.WriteLine("MariaDB image created successfully!");
         }
     }
 }

@@ -1,4 +1,4 @@
-namespace WinFormsApp1
+namespace DockerBase
 {
     internal static class Program
     {

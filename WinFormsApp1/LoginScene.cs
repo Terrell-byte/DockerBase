@@ -1,13 +1,16 @@
-namespace WinFormsApp1
+using DockerBase;
+
+namespace DockerBase
 {
     public partial class LoginScene : Form
     {
         DockerService dockerService = new DockerService();
+        UserDB userDB = new UserDB();
 
         public LoginScene()
         {
             InitializeComponent();
-            
+            userDB.ConnectToDB("root", "rootpassword", "3306");
         }
         private async void LoginScene_load(object sender, EventArgs e)
         {
