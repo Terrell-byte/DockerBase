@@ -1,9 +1,4 @@
 ﻿using MySql.Data.MySqlClient;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DockerBase
 {
@@ -13,20 +8,12 @@ namespace DockerBase
         private MySqlConnection? conn;
         private readonly MySqlCommand? cmd;
 
-        public bool ValidateUser(string username, string password)
-        {
-            //we need to connect to the mariadb docker container
-            //we need to query the database for the username and password
-            //we need to return true if the username and password match
-            //we need to return false if the username and password do not match
-            return false;
-        }
         public void ConnectToDB(string userName, string password, string port)
         {
             string _userName = userName;
             string _password = password;
             string _port = port;
-            string url = "Server=localhost;Port=" + _port + ";Database=userDB;Uid=" + userName + ";Pwd=" + password + ";";
+            string url = "Server=127.0.0.1;Port=" + _port + ";Database=userDB;Uid=" + userName + ";Pwd=" + password + ";";
 
             try
             {
@@ -39,16 +26,30 @@ namespace DockerBase
                 Console.WriteLine("Error connecting to MySQL database: " + e.Message);
             }
         }
-    
-        public void QueryDB()
+
+        public void QueryDB(string username, string password, Action<bool> callback)
         {
-            //we need to query the database for the username and password
+            string sql = "SELECT * FROM users WHERE username = @username AND password = @password;";
+            int result = 0;
+
+            using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+            {
+                cmd.Parameters.AddWithValue("@username", username);
+                cmd.Parameters.AddWithValue("@password", password);
+                result = Convert.ToInt32(cmd.ExecuteScalar());
+            }
+
+            bool isValid = (result > 0);
+            callback(isValid);
+            conn.Close();
         }
-        public bool CheckUser(string username, string password)
+
+        public void ValidateUser(string username, string password, Action<bool> callback)
         {
-            //we need to return true if the username and password match
-            //we need to return false if the username and password do not match
-            return false;
+            QueryDB(username, password, (isValid) =>
+            {
+                callback(isValid);
+            });
         }
     }
 }

@@ -47,19 +47,34 @@ namespace DockerBase
 
         }
 
-        private void usernameText_TextChanged(object sender, EventArgs e)
+        private void usernameField_TextChanged(object sender, EventArgs e)
         {
 
         }
 
-        private void passwordText_TextChanged(object sender, EventArgs e)
+        private void passwordField_TextChanged(object sender, EventArgs e)
         {
 
         }
 
         private void LoginBtn_Click(object sender, EventArgs e)
         {
+            string username = usernameField.Text;
+            string password = passwordField.Text;
 
+            userDB.ValidateUser(username, password, (isValid) =>
+            {
+                if (isValid)
+                {
+                    // credentials are correct, do something
+                    MessageBox.Show("Login successful!");
+                }
+                else
+                {
+                    // credentials are incorrect, show error message
+                    MessageBox.Show("Invalid username or password.");
+                }
+            });
         }
     }
 }

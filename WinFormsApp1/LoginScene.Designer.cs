@@ -34,8 +34,8 @@
             pictureBox3 = new PictureBox();
             panel1 = new Panel();
             panel2 = new Panel();
-            textBox1 = new TextBox();
-            textBox2 = new TextBox();
+            usernameField = new TextBox();
+            passwordField = new TextBox();
             button1 = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
@@ -107,23 +107,23 @@
             // 
             // textBox1
             // 
-            textBox1.BorderStyle = BorderStyle.None;
-            textBox1.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point);
-            textBox1.Location = new Point(100, 292);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(261, 28);
-            textBox1.TabIndex = 6;
-            textBox1.TextChanged += usernameText_TextChanged;
+            usernameField.BorderStyle = BorderStyle.None;
+            usernameField.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point);
+            usernameField.Location = new Point(100, 292);
+            usernameField.Name = "textBox1";
+            usernameField.Size = new Size(261, 28);
+            usernameField.TabIndex = 6;
+            usernameField.TextChanged += usernameField_TextChanged;
             // 
             // textBox2
             // 
-            textBox2.BorderStyle = BorderStyle.None;
-            textBox2.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point);
-            textBox2.Location = new Point(100, 385);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(261, 28);
-            textBox2.TabIndex = 7;
-            textBox2.TextChanged += passwordText_TextChanged;
+            passwordField.BorderStyle = BorderStyle.None;
+            passwordField.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point);
+            passwordField.Location = new Point(100, 385);
+            passwordField.Name = "textBox2";
+            passwordField.Size = new Size(261, 28);
+            passwordField.TabIndex = 7;
+            passwordField.TextChanged += passwordField_TextChanged;
             // 
             // button1
             // 
@@ -145,8 +145,8 @@
             BackColor = Color.White;
             ClientSize = new Size(400, 600);
             Controls.Add(button1);
-            Controls.Add(textBox2);
-            Controls.Add(textBox1);
+            Controls.Add(passwordField);
+            Controls.Add(usernameField);
             Controls.Add(panel2);
             Controls.Add(panel1);
             Controls.Add(pictureBox3);
@@ -172,8 +172,8 @@
         private PictureBox pictureBox3;
         private Panel panel1;
         private Panel panel2;
-        private TextBox textBox1;
-        private TextBox textBox2;
+        private TextBox usernameField;
+        private TextBox passwordField;
         private Button button1;
     }
 }
