@@ -44,7 +44,7 @@
             // 
             // pictureBox1
             // 
-            pictureBox1.Image = DockerBase.Properties.Resources.logo;
+            pictureBox1.Image = Properties.Resources.logo;
             pictureBox1.Location = new Point(150, 68);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(98, 96);
@@ -67,7 +67,7 @@
             // 
             // pictureBox2
             // 
-            pictureBox2.Image = DockerBase.Properties.Resources.person_circle;
+            pictureBox2.Image = Properties.Resources.person_circle;
             pictureBox2.Location = new Point(64, 292);
             pictureBox2.Name = "pictureBox2";
             pictureBox2.Size = new Size(30, 30);
@@ -78,7 +78,7 @@
             // 
             // pictureBox3
             // 
-            pictureBox3.Image = DockerBase.Properties.Resources.shield_lock;
+            pictureBox3.Image = Properties.Resources.shield_lock;
             pictureBox3.Location = new Point(64, 385);
             pictureBox3.Name = "pictureBox3";
             pictureBox3.Size = new Size(30, 30);
@@ -105,22 +105,23 @@
             panel2.TabIndex = 5;
             panel2.Paint += panel2_Paint;
             // 
-            // textBox1
+            // usernameField
             // 
             usernameField.BorderStyle = BorderStyle.None;
             usernameField.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point);
             usernameField.Location = new Point(100, 292);
-            usernameField.Name = "textBox1";
+            usernameField.Name = "usernameField";
             usernameField.Size = new Size(261, 28);
             usernameField.TabIndex = 6;
             usernameField.TextChanged += usernameField_TextChanged;
             // 
-            // textBox2
+            // passwordField
             // 
             passwordField.BorderStyle = BorderStyle.None;
             passwordField.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point);
             passwordField.Location = new Point(100, 385);
-            passwordField.Name = "textBox2";
+            passwordField.Name = "passwordField";
+            passwordField.PasswordChar = '*';
             passwordField.Size = new Size(261, 28);
             passwordField.TabIndex = 7;
             passwordField.TextChanged += passwordField_TextChanged;

@@ -64,12 +64,14 @@ namespace DockerBase
             if (userDB.ValidateUser(username, password) == true)
             {
                 MessageBox.Show("Login successful!");
+
             }
             else
             {
                 MessageBox.Show("Invalid username or password!");
+                usernameField.Text = null;
+                passwordField.Text = null;
             }
-
         }
     }
 }
