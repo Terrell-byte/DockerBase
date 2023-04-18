@@ -1,4 +1,4 @@
-FROM mariadb:latest
+FROM mysql:latest
 
 ENV MYSQL_DATABASE=userDB
 ENV MYSQL_USER=myuser

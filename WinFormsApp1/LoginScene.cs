@@ -10,7 +10,6 @@ namespace DockerBase
         public LoginScene()
         {
             InitializeComponent();
-            userDB.ConnectToDB("root", "rootpassword", "3306");
         }
         private async void LoginScene_load(object sender, EventArgs e)
         {
@@ -62,19 +61,15 @@ namespace DockerBase
             string username = usernameField.Text;
             string password = passwordField.Text;
 
-            userDB.ValidateUser(username, password, (isValid) =>
+            if (userDB.ValidateUser(username, password) == true)
             {
-                if (isValid)
-                {
-                    // credentials are correct, do something
-                    MessageBox.Show("Login successful!");
-                }
-                else
-                {
-                    // credentials are incorrect, show error message
-                    MessageBox.Show("Invalid username or password.");
-                }
-            });
+                MessageBox.Show("Login successful!");
+            }
+            else
+            {
+                MessageBox.Show("Invalid username or password!");
+            }
+
         }
     }
 }

@@ -1,55 +1,63 @@
 ﻿using MySql.Data.MySqlClient;
+using System.Data;
 
 namespace DockerBase
 {
     internal class UserDB
     {
-
-        private MySqlConnection? conn;
-        private readonly MySqlCommand? cmd;
-
-        public void ConnectToDB(string userName, string password, string port)
+        public (string, string) GetUserInfo(string username)
         {
-            string _userName = userName;
-            string _password = password;
-            string _port = port;
-            string url = "Server=127.0.0.1;Port=" + _port + ";Database=userDB;Uid=" + userName + ";Pwd=" + password + ";";
+            string connectionString = "server=127.0.0.1;user=root;database=userDB;port=3306;password=rootpassword;";
+            MySqlConnection connection = new MySqlConnection(connectionString);
 
             try
             {
-                conn = new MySqlConnection(url);
-                conn.Open();
-                Console.WriteLine("Connected to MySQL database.");
+                connection.Open();
+
+                if (connection.State == ConnectionState.Open) // added check for connection state
+                {
+                    string query = "SELECT * FROM users WHERE username = @username";
+                    MySqlCommand command = new MySqlCommand(query, connection);
+                    command.Parameters.AddWithValue("@username", username);
+
+                    using (MySqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            string _username = reader.GetString("username");
+                            string _password = reader.GetString("password");
+                            return (_username, _password);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Username " + username + " was not found!");
+                        }
+                    }
+                }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Console.WriteLine("Error connecting to MySQL database: " + e.Message);
+                MessageBox.Show("ERROR 001: an error has occured when connecting to database");
             }
+            finally
+            {
+                connection.Close();
+            }
+            return (null, null);
         }
 
-        public void QueryDB(string username, string password, Action<bool> callback)
-        {
-            string sql = "SELECT * FROM users WHERE username = @username AND password = @password;";
-            int result = 0;
 
-            using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+        public bool ValidateUser(string username, string password)
+        {
+            (string _username, string _password) = GetUserInfo(username);
+            if (_username != null && _password != null && username == _username && password == _password)
             {
-                cmd.Parameters.AddWithValue("@username", username);
-                cmd.Parameters.AddWithValue("@password", password);
-                result = Convert.ToInt32(cmd.ExecuteScalar());
+                return true;
             }
-
-            bool isValid = (result > 0);
-            callback(isValid);
-            conn.Close();
-        }
-
-        public void ValidateUser(string username, string password, Action<bool> callback)
-        {
-            QueryDB(username, password, (isValid) =>
+            else
             {
-                callback(isValid);
-            });
+                return false;
+            }
         }
     }
 }
