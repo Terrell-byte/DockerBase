@@ -4,5 +4,8 @@
     <Compile Update="LoginScene.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="MenuScene.cs">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
 </Project>

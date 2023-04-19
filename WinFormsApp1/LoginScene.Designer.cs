@@ -51,7 +51,6 @@
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
-            pictureBox1.Click += loginLogo;
             // 
             // label1
             // 
@@ -63,7 +62,6 @@
             label1.Size = new Size(128, 42);
             label1.TabIndex = 1;
             label1.Text = "LOG IN";
-            label1.Click += loginTitle;
             // 
             // pictureBox2
             // 
@@ -74,7 +72,6 @@
             pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox2.TabIndex = 2;
             pictureBox2.TabStop = false;
-            pictureBox2.Click += usernameIcon;
             // 
             // pictureBox3
             // 
@@ -85,7 +82,6 @@
             pictureBox3.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox3.TabIndex = 3;
             pictureBox3.TabStop = false;
-            pictureBox3.Click += passwordIcon;
             // 
             // panel1
             // 
@@ -94,7 +90,6 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(297, 1);
             panel1.TabIndex = 4;
-            panel1.Paint += panel1_Paint;
             // 
             // panel2
             // 
@@ -103,7 +98,6 @@
             panel2.Name = "panel2";
             panel2.Size = new Size(297, 1);
             panel2.TabIndex = 5;
-            panel2.Paint += panel2_Paint;
             // 
             // usernameField
             // 
@@ -113,7 +107,6 @@
             usernameField.Name = "usernameField";
             usernameField.Size = new Size(261, 28);
             usernameField.TabIndex = 6;
-            usernameField.TextChanged += usernameField_TextChanged;
             // 
             // passwordField
             // 
@@ -124,7 +117,6 @@
             passwordField.PasswordChar = '*';
             passwordField.Size = new Size(261, 28);
             passwordField.TabIndex = 7;
-            passwordField.TextChanged += passwordField_TextChanged;
             // 
             // button1
             // 
@@ -157,7 +149,6 @@
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
             Name = "LoginScene";
             Text = "Form1";
-            Load += LoginScene_load;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();

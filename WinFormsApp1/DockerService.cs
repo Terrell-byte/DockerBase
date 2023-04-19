@@ -23,15 +23,33 @@ namespace DockerBase
             }
         }
 
-        public async Task StartCompose()
+        public async Task CreateMySQLImage()
         {
             var imageCreateParameters = new ImagesCreateParameters
             {
-                FromImage = "mariadb",
+                FromImage = "mysql",
                 Tag = "latest"
             };
 
             await DockerClient.Images.CreateImageAsync(imageCreateParameters, null, new Progress<JSONMessage>(), CancellationToken.None);
+        }
+        public async Task CreateDockerContainer(string port, string password, string name)
+        {
+            string _port = port + "/tcp";
+            var containerCreateParameters = new CreateContainerParameters
+            {
+                Image = "mysql",
+                Name = name,
+                Env = new List<string> { "MYSQL_ROOT_PASSWORD=" + password },
+                HostConfig = new HostConfig
+                {
+                    PortBindings = new Dictionary<string, IList<PortBinding>>
+                    {
+                        { _port, new List<PortBinding> { new PortBinding { HostPort = port } } }
+                    }
+                }
+            };
+            await DockerClient.Containers.CreateContainerAsync(containerCreateParameters);
         }
     }
 }

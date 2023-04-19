@@ -3,7 +3,7 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
-/.vs
+
 
 # User-specific files
 *.rsuser
@@ -477,7 +477,3 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
-/.vs/DockerBase/DesignTimeBuild/.dtbcache.v2
-/.vs/DockerBase/v17/.suo
-/.vs/DockerBase/DesignTimeBuild/.dtbcache.v2
-/.gitignore

@@ -62,3 +62,4 @@ C:\Users\Danie\source\repos\DockerBase\WinFormsApp1\bin\Debug\net7.0-windows\run
 C:\Users\Danie\source\repos\DockerBase\WinFormsApp1\obj\Debug\net7.0-windows\DockerBase.csproj.CopyComplete
 C:\Users\Danie\source\repos\DockerBase\WinFormsApp1\obj\Debug\net7.0-windows\DockerBase.genruntimeconfig.cache
 C:\Users\Danie\source\repos\DockerBase\WinFormsApp1\obj\Debug\net7.0-windows\ref\DockerBase.dll
+C:\Users\Danie\source\repos\DockerBase\WinFormsApp1\obj\Debug\net7.0-windows\DockerBase.MenuScene.resources
