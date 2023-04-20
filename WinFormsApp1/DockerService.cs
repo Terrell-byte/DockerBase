@@ -45,9 +45,10 @@ namespace DockerBase
                 port++;
             }
 
-            if (name == null)
+            if (name == "")
             {
                 MessageBox.Show("Error 002: Database must have a name");
+                return;
             }
 
             // Create the container with the next available port
