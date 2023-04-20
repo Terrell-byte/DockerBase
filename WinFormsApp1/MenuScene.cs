@@ -15,13 +15,14 @@ namespace DockerBase
         DockerService service = new DockerService();
         public MenuScene()
         {
-            InitializeComponent();    
+            InitializeComponent();
             service.CreateMySQLImage();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            service.CreateDockerContainer("5504", "password", "test");
+            String name = ContainerNameField.Text;
+            _ = service.CreateDockerContainer("rootpassword123", name);
         }
     }
 }

@@ -33,9 +33,19 @@ namespace DockerBase
 
             await DockerClient.Images.CreateImageAsync(imageCreateParameters, null, new Progress<JSONMessage>(), CancellationToken.None);
         }
-        public async Task CreateDockerContainer(string port, string password, string name)
+        public async Task CreateDockerContainer(string password, string name)
         {
-            string _port = port + "/tcp";
+            // Retrieve a list of currently bound host ports
+            var usedPorts = await GetUsedHostPorts();
+
+            // Find the next available port number
+            int port = 1;
+            while (usedPorts.ContainsKey(port))
+            {
+                port++;
+            }
+
+            // Create the container with the next available port
             var containerCreateParameters = new CreateContainerParameters
             {
                 Image = "mysql",
@@ -44,12 +54,30 @@ namespace DockerBase
                 HostConfig = new HostConfig
                 {
                     PortBindings = new Dictionary<string, IList<PortBinding>>
-                    {
-                        { _port, new List<PortBinding> { new PortBinding { HostPort = port } } }
-                    }
+            {
+                { "3306/tcp", new List<PortBinding> { new PortBinding { HostPort = $"{port}/tcp" } } }
+            }
                 }
             };
             await DockerClient.Containers.CreateContainerAsync(containerCreateParameters);
+        }
+
+        private async Task<Dictionary<int, bool>> GetUsedHostPorts()
+        {
+            var usedPorts = new Dictionary<int, bool>();
+            var containers = await DockerClient.Containers.ListContainersAsync(
+                new ContainersListParameters { All = true });
+            foreach (var container in containers)
+            {
+                foreach (var port in container.Ports)
+                {
+                    if (port.PublicPort > 0 && !usedPorts.TryGetValue(port.PublicPort, out _))
+                    {
+                        usedPorts.Add(port.PublicPort, true);
+                    }
+                }
+            }
+            return usedPorts;
         }
     }
 }
