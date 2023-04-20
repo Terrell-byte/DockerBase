@@ -45,6 +45,11 @@ namespace DockerBase
                 port++;
             }
 
+            if (name == null)
+            {
+                MessageBox.Show("Error 002: Database must have a name");
+            }
+
             // Create the container with the next available port
             var containerCreateParameters = new CreateContainerParameters
             {
@@ -54,12 +59,14 @@ namespace DockerBase
                 HostConfig = new HostConfig
                 {
                     PortBindings = new Dictionary<string, IList<PortBinding>>
-            {
-                { "3306/tcp", new List<PortBinding> { new PortBinding { HostPort = $"{port}/tcp" } } }
-            }
+                    {
+                        { "3306/tcp", new List<PortBinding> { new PortBinding { HostPort = $"{port}/tcp" } } }
+                    }
                 }
             };
             await DockerClient.Containers.CreateContainerAsync(containerCreateParameters);
+            //now let us start the container
+            await DockerClient.Containers.StartContainerAsync(name, new ContainerStartParameters());
         }
 
         private async Task<Dictionary<int, bool>> GetUsedHostPorts()
