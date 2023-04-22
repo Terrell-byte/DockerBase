@@ -5,6 +5,7 @@ namespace DockerBase
 {
     public class DockerService
     {
+        private Dictionary<int,bool> usedPorts = new Dictionary<int, bool>();
         private readonly DockerClient DockerClient;
 
         public DockerService()
@@ -35,6 +36,8 @@ namespace DockerBase
         }
         public async Task CreateDockerContainer(string password, string name)
         {
+            //Label the container so that dockerbase only shows containers with our label
+
             // Retrieve a list of currently bound host ports
             var usedPorts = await GetUsedHostPorts();
 
@@ -56,6 +59,10 @@ namespace DockerBase
             {
                 Image = "mysql",
                 Name = name,
+                Labels = new Dictionary<string, string>
+                {
+                    {"mysql", "DockerBase"}
+                },
                 Env = new List<string> { "MYSQL_ROOT_PASSWORD=" + password },
                 HostConfig = new HostConfig
                 {
@@ -72,7 +79,6 @@ namespace DockerBase
 
         private async Task<Dictionary<int, bool>> GetUsedHostPorts()
         {
-            var usedPorts = new Dictionary<int, bool>();
             var containers = await DockerClient.Containers.ListContainersAsync(
                 new ContainersListParameters { All = true });
             foreach (var container in containers)

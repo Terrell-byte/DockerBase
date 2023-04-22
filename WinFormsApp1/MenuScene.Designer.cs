@@ -29,42 +29,44 @@
         private void InitializeComponent()
         {
             button1 = new Button();
-            ContainerNameField = new TextBox();
+            panel1 = new Panel();
+            panel1.SuspendLayout();
             SuspendLayout();
             // 
             // button1
             // 
-            button1.Location = new Point(220, 219);
+            button1.Location = new Point(432, 294);
             button1.Name = "button1";
-            button1.Size = new Size(332, 107);
+            button1.Size = new Size(169, 107);
             button1.TabIndex = 0;
             button1.Text = "button1";
             button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click;
+            button1.Click += AddContainer_Click;
             // 
-            // textBox1
+            // panel1
             // 
-            ContainerNameField.Location = new Point(220, 164);
-            ContainerNameField.Name = "Container Name";
-            ContainerNameField.Size = new Size(332, 23);
-            ContainerNameField.TabIndex = 1;
+            panel1.BackColor = Color.White;
+            panel1.Controls.Add(button1);
+            panel1.Location = new Point(178, 64);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(1015, 658);
+            panel1.TabIndex = 1;
             // 
             // MenuScene
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
-            Controls.Add(ContainerNameField);
-            Controls.Add(button1);
+            ClientSize = new Size(1205, 734);
+            Controls.Add(panel1);
             Name = "MenuScene";
             Text = "MenuScene";
+            panel1.ResumeLayout(false);
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
 
         private Button button1;
-        private TextBox ContainerNameField;
+        private Panel panel1;
     }
 }

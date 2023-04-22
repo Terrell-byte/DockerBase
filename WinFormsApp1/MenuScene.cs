@@ -12,17 +12,19 @@ namespace DockerBase
 {
     public partial class MenuScene : Form
     {
-        DockerService service = new DockerService();
+
         public MenuScene()
         {
             InitializeComponent();
-            service.CreateMySQLImage();
+            //First start all containers with the label Dockerbase
+            //then if there are no container then show button
+
+
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void AddContainer_Click(object sender, EventArgs e)
         {
-            String name = ContainerNameField.Text;
-            _ = service.CreateDockerContainer("rootpassword123", name);
+            new CreateDB().Show();
         }
     }
 }
