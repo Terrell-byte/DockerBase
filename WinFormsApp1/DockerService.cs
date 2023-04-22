@@ -6,8 +6,7 @@ namespace DockerBase
     public class DockerService
     {
         private Dictionary<int,bool> usedPorts = new Dictionary<int, bool>();
-        private readonly DockerClient DockerClient;
-
+        public DockerClient DockerClient { get; private set; }
         public DockerService()
         {
             if (OperatingSystem.IsWindows())
@@ -24,6 +23,27 @@ namespace DockerBase
             }
         }
 
+        private static DockerService instance = null;
+
+        private static readonly object lockObject = new object();
+
+        public static DockerService GetInstance()
+        {
+            // Check if the instance already exists
+            if (instance == null)
+            {
+                // Use thread-safe locking to prevent multiple instances from being created simultaneously
+                lock (lockObject)
+                {
+                    // Check again to make sure the instance doesn't exist (it may have been created by another thread while waiting for the lock)
+                    if (instance == null)
+                    {
+                        instance = new DockerService();
+                    }
+                }
+            }
+            return instance;
+        }
         public async Task CreateMySQLImage()
         {
             var imageCreateParameters = new ImagesCreateParameters
@@ -61,7 +81,7 @@ namespace DockerBase
                 Name = name,
                 Labels = new Dictionary<string, string>
                 {
-                    {"mysql", "DockerBase"}
+                    {"mysql", "Dockerbase"}
                 },
                 Env = new List<string> { "MYSQL_ROOT_PASSWORD=" + password },
                 HostConfig = new HostConfig
