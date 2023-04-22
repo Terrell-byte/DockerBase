@@ -18,10 +18,10 @@ namespace DockerBase
         public MenuScene()
         {
             InitializeComponent();
-            _ = StartAllContainers();
+            _ = GetContainers();
         }
 
-        public async Task<object?> StartAllContainers()
+        public async Task GetContainers()
         {
 
             //lets start all the containers that have the label Dockerbase
@@ -43,16 +43,17 @@ namespace DockerBase
                         if (label.Value.Contains("Dockerbase"))
                         {
                             var name = container.Names[0].Substring(1);
-                            await dockerClient.Containers.StartContainerAsync(name, new ContainerStartParameters());
+                            CreateNewDatabaseTab(name);
                         }
                     }
                 }
             }
-            // Return null if there are no containers with the Dockerbase label
-            return null;
         }
 
-
+        public void CreateNewDatabaseTab(string name)
+        {
+            //create a UI element 
+        }
         private void AddContainer_Click(object sender, EventArgs e)
         {
             new CreateDB().Show();

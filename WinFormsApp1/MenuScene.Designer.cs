@@ -30,12 +30,14 @@
         {
             button1 = new Button();
             panel1 = new Panel();
+            panel2 = new Panel();
+            panel3 = new Panel();
             panel1.SuspendLayout();
             SuspendLayout();
             // 
             // button1
             // 
-            button1.Location = new Point(432, 294);
+            button1.Location = new Point(432, 287);
             button1.Name = "button1";
             button1.Size = new Size(169, 107);
             button1.TabIndex = 0;
@@ -47,16 +49,34 @@
             // 
             panel1.BackColor = Color.White;
             panel1.Controls.Add(button1);
-            panel1.Location = new Point(178, 64);
+            panel1.Location = new Point(199, 57);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1015, 658);
+            panel1.Size = new Size(994, 665);
             panel1.TabIndex = 1;
+            // 
+            // panel2
+            // 
+            panel2.BackColor = Color.White;
+            panel2.Location = new Point(12, 12);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(173, 710);
+            panel2.TabIndex = 2;
+            // 
+            // panel3
+            // 
+            panel3.BackColor = Color.White;
+            panel3.Location = new Point(199, 12);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(992, 31);
+            panel3.TabIndex = 3;
             // 
             // MenuScene
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1205, 734);
+            Controls.Add(panel3);
+            Controls.Add(panel2);
             Controls.Add(panel1);
             Name = "MenuScene";
             Text = "MenuScene";
@@ -68,5 +88,7 @@
 
         private Button button1;
         private Panel panel1;
+        private Panel panel2;
+        private Panel panel3;
     }
 }
