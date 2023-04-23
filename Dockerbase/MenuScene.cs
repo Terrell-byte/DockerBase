@@ -18,13 +18,27 @@ namespace DockerBase
         public MenuScene()
         {
             InitializeComponent();
-            _ = GetContainers();
+            Load += MenuScene_Load;
         }
 
-        public async Task GetContainers()
+        private async void MenuScene_Load(object sender, EventArgs e)
         {
+            if (await GetContainers() == false)
+            {
+                this.MenuFormLoader.Controls.Clear();
+                NoContainersFound noContainersFound = new NoContainersFound() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
+                noContainersFound.FormBorderStyle = FormBorderStyle.None;
+                this.MenuFormLoader.Controls.Add(noContainersFound);
+                noContainersFound.Show();
+            }
+            else
+            {
+                MessageBox.Show("there are containers");
+            }
+        }
 
-            //lets start all the containers that have the label Dockerbase
+        public async Task<bool> GetContainers()
+        {
             // Retrieve the DockerClient instance from the DockerService singleton
             var dockerClient = DockerService.GetInstance().DockerClient;
 
@@ -44,11 +58,18 @@ namespace DockerBase
                         {
                             var name = container.Names[0].Substring(1);
                             CreateNewDatabaseTab(name);
+                            await dockerClient.Containers.StartContainerAsync(name, new ContainerStartParameters());
                         }
                     }
                 }
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
+
 
         public void CreateNewDatabaseTab(string name)
         {
