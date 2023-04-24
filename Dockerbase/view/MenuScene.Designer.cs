@@ -67,7 +67,6 @@
             Controls.Add(MenuFormLoader);
             Name = "MenuScene";
             Text = "MenuScene";
-            Load += MenuScene_Load;
             ResumeLayout(false);
         }
 

@@ -1,7 +1,10 @@
-﻿namespace DockerBase
+﻿using DockerBase.controller;
+
+namespace DockerBase.view
 {
-    partial class LoginScene
+    partial class LoginView
     {
+        LoginController controller;
         /// <summary>
         ///  Required designer variable.
         /// </summary>
@@ -36,7 +39,7 @@
             panel2 = new Panel();
             usernameField = new TextBox();
             passwordField = new TextBox();
-            button1 = new Button();
+            loginButton = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
@@ -120,24 +123,24 @@
             // 
             // button1
             // 
-            button1.BackColor = Color.FromArgb(237, 92, 62);
-            button1.Font = new Font("Corbel", 26.25F, FontStyle.Bold, GraphicsUnit.Point);
-            button1.ForeColor = Color.White;
-            button1.Location = new Point(84, 467);
-            button1.Name = "button1";
-            button1.Size = new Size(231, 69);
-            button1.TabIndex = 8;
-            button1.Text = "LOGIN";
-            button1.UseVisualStyleBackColor = false;
-            button1.Click += LoginBtn_Click;
+            loginButton.BackColor = Color.FromArgb(237, 92, 62);
+            loginButton.Font = new Font("Corbel", 26.25F, FontStyle.Bold, GraphicsUnit.Point);
+            loginButton.ForeColor = Color.White;
+            loginButton.Location = new Point(84, 467);
+            loginButton.Name = "button1";
+            loginButton.Size = new Size(231, 69);
+            loginButton.TabIndex = 8;
+            loginButton.Text = "LOGIN";
+            loginButton.UseVisualStyleBackColor = false;
+            loginButton.Click += LoginButton_Click;
             // 
-            // LoginScene
+            // LoginView
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             ClientSize = new Size(400, 600);
-            Controls.Add(button1);
+            Controls.Add(loginButton);
             Controls.Add(passwordField);
             Controls.Add(usernameField);
             Controls.Add(panel2);
@@ -147,7 +150,7 @@
             Controls.Add(label1);
             Controls.Add(pictureBox1);
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
-            Name = "LoginScene";
+            Name = "LoginView";
             Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
@@ -166,6 +169,6 @@
         private Panel panel2;
         private TextBox usernameField;
         private TextBox passwordField;
-        private Button button1;
+        private Button loginButton;
     }
 }

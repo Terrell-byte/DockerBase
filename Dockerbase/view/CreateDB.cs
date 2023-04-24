@@ -13,9 +13,12 @@ namespace DockerBase
     public partial class CreateDB : Form
     {
         DockerService service = new DockerService();
-        public CreateDB()
+
+        private MenuScene menuScene;
+        public CreateDB(MenuScene menuScene)
         {
             InitializeComponent();
+            this.menuScene = menuScene;
             service.CreateMySQLImage();
         }
 
@@ -28,6 +31,9 @@ namespace DockerBase
         {
             String name = nameField.Text;
             _ = service.CreateDockerContainer("rootpassword123", name);
+            menuScene.GetMenuFormLoader().Controls.Clear();
+            this.Close();
         }
+
     }
 }

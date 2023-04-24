@@ -28,31 +28,35 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NoContainersFound));
             label1 = new Label();
-            button1 = new Button();
+            addDatabaseButton = new Button();
             SuspendLayout();
             // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Corbel", 11.25F, FontStyle.Bold, GraphicsUnit.Point);
-            label1.Location = new Point(404, 224);
+            label1.ForeColor = SystemColors.ControlDarkDark;
+            label1.Location = new Point(326, 232);
             label1.Name = "label1";
-            label1.Size = new Size(186, 18);
+            label1.Size = new Size(333, 18);
             label1.TabIndex = 0;
-            label1.Text = "No Containers where found!";
+            label1.Text = "ERROR: Could not find any DockerBase containers!";
             // 
-            // button1
+            // addDatabaseButton
             // 
-            button1.BackgroundImageLayout = ImageLayout.None;
-            button1.Cursor = Cursors.Cross;
-            button1.FlatStyle = FlatStyle.Popup;
-            button1.Image = Properties.Resources.person_circle;
-            button1.Location = new Point(404, 286);
-            button1.Name = "button1";
-            button1.Size = new Size(186, 186);
-            button1.TabIndex = 1;
-            button1.UseVisualStyleBackColor = true;
+            addDatabaseButton.BackgroundImageLayout = ImageLayout.None;
+            addDatabaseButton.Cursor = Cursors.Cross;
+            addDatabaseButton.FlatAppearance.BorderSize = 0;
+            addDatabaseButton.FlatStyle = FlatStyle.Flat;
+            addDatabaseButton.Image = (Image)resources.GetObject("addDatabaseButton.Image");
+            addDatabaseButton.Location = new Point(399, 253);
+            addDatabaseButton.Name = "addDatabaseButton";
+            addDatabaseButton.Size = new Size(186, 186);
+            addDatabaseButton.TabIndex = 1;
+            addDatabaseButton.UseVisualStyleBackColor = true;
+            addDatabaseButton.Click += AddDB_Click;
             // 
             // NoContainersFound
             // 
@@ -60,7 +64,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             ClientSize = new Size(986, 671);
-            Controls.Add(button1);
+            Controls.Add(addDatabaseButton);
             Controls.Add(label1);
             FormBorderStyle = FormBorderStyle.None;
             Name = "NoContainersFound";
@@ -72,6 +76,6 @@
         #endregion
 
         private Label label1;
-        private Button button1;
+        private Button addDatabaseButton;
     }
 }

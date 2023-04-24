@@ -26,7 +26,7 @@ namespace DockerBase
             if (await GetContainers() == false)
             {
                 this.MenuFormLoader.Controls.Clear();
-                NoContainersFound noContainersFound = new NoContainersFound() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
+                NoContainersFound noContainersFound = new NoContainersFound(this) { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
                 noContainersFound.FormBorderStyle = FormBorderStyle.None;
                 this.MenuFormLoader.Controls.Add(noContainersFound);
                 noContainersFound.Show();
@@ -36,7 +36,6 @@ namespace DockerBase
                 MessageBox.Show("there are containers");
             }
         }
-
         public async Task<bool> GetContainers()
         {
             // Retrieve the DockerClient instance from the DockerService singleton
@@ -70,14 +69,15 @@ namespace DockerBase
             }
         }
 
+        //create getter and setter for menuformloader
+        public Panel GetMenuFormLoader()
+        {
+            return MenuFormLoader;
+        }
 
         public void CreateNewDatabaseTab(string name)
         {
             //create a UI element 
-        }
-        private void AddContainer_Click(object sender, EventArgs e)
-        {
-            new CreateDB().Show();
         }
     }
 }

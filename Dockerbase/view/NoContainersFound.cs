@@ -12,9 +12,16 @@ namespace DockerBase
 {
     public partial class NoContainersFound : Form
     {
-        public NoContainersFound()
+        private MenuScene menuScene;
+        public NoContainersFound(MenuScene menuScene)
         {
             InitializeComponent();
+            this.menuScene = menuScene;
+        }
+
+        private void AddDB_Click(object sender, EventArgs e)
+        {
+            new CreateDB(menuScene).Show();
         }
     }
 }

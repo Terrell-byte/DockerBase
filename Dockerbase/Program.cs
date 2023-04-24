@@ -1,3 +1,7 @@
+using DockerBase.controller;
+using DockerBase.model;
+using DockerBase.view;
+
 namespace DockerBase
 {
     internal static class Program
@@ -11,7 +15,7 @@ namespace DockerBase
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new LoginScene());
+            Application.Run(new LoginView());
         }
     }
 }
