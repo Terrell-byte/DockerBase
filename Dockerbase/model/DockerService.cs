@@ -1,5 +1,11 @@
 ﻿using Docker.DotNet;
 using Docker.DotNet.Models;
+using MySqlX.XDevAPI;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+
+
 
 namespace DockerBase.model
 {
@@ -12,6 +18,7 @@ namespace DockerBase.model
             if (OperatingSystem.IsWindows())
             {
                 dockerClient = new DockerClientConfiguration(new Uri("npipe://./pipe/docker_engine")).CreateClient();
+
             }
             else if (OperatingSystem.IsLinux())
             {
@@ -21,6 +28,7 @@ namespace DockerBase.model
             {
                 throw new Exception("Unknown operating system.");
             }
+            
     }
 
         public async Task CreateMySQLImage()
@@ -109,7 +117,6 @@ namespace DockerBase.model
 
             var containerDict = new Dictionary<string, bool>();
 
-
             foreach (var container in containers)
             {
                 if (containers.Any(c => c.Labels.Any(l => l.Value.Contains("Dockerbase"))))
@@ -122,7 +129,7 @@ namespace DockerBase.model
             }
             return null;
         }
-    }
+    }   
 
     public class ContainerInfo
     {
