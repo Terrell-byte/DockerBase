@@ -1,6 +1,6 @@
-﻿namespace DockerBase
+﻿namespace DockerBase.view
 {
-    partial class CreateDB
+    partial class CreateDatabaseView
     {
         /// <summary>
         /// Required designer variable.

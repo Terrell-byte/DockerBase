@@ -1,6 +1,6 @@
-﻿namespace DockerBase
+﻿namespace DockerBase.view
 {
-    partial class NoContainersFound
+    partial class NoContainersView
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NoContainersFound));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NoContainersView));
             label1 = new Label();
             addDatabaseButton = new Button();
             SuspendLayout();

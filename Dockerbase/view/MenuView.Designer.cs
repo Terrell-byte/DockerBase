@@ -1,6 +1,6 @@
-﻿namespace DockerBase
+﻿namespace DockerBase.view
 {
-    partial class MenuScene
+    partial class MenuView
     {
         /// <summary>
         /// Required designer variable.

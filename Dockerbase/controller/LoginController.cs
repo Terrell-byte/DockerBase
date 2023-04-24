@@ -24,7 +24,7 @@ namespace DockerBase.controller
             if (isValid)
             {
                 MessageBox.Show("Login successful!");
-                new MenuScene().Show();
+                new MenuView().Show();
                 view.Hide();
             }
             else
