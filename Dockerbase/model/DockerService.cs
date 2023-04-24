@@ -21,7 +21,7 @@ namespace DockerBase.model
             {
                 throw new Exception("Unknown operating system.");
             }
-        }
+    }
 
         public async Task CreateMySQLImage()
         {
