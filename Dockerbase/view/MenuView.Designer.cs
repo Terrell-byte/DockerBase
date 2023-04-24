@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             MenuFormLoader = new Panel();
-            panel2 = new Panel();
+            DatabaseList = new Panel();
             UserPanel = new Panel();
             SuspendLayout();
             // 
@@ -41,13 +41,13 @@
             MenuFormLoader.Size = new Size(1002, 710);
             MenuFormLoader.TabIndex = 1;
             // 
-            // panel2
+            // DatabaseList
             // 
-            panel2.BackColor = Color.White;
-            panel2.Location = new Point(12, 167);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(173, 555);
-            panel2.TabIndex = 2;
+            DatabaseList.BackColor = Color.White;
+            DatabaseList.Location = new Point(12, 167);
+            DatabaseList.Name = "DatabaseList";
+            DatabaseList.Size = new Size(173, 555);
+            DatabaseList.TabIndex = 2;
             // 
             // UserPanel
             // 
@@ -57,15 +57,15 @@
             UserPanel.Size = new Size(173, 149);
             UserPanel.TabIndex = 3;
             // 
-            // MenuScene
+            // MenuView
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1205, 734);
             Controls.Add(UserPanel);
-            Controls.Add(panel2);
+            Controls.Add(DatabaseList);
             Controls.Add(MenuFormLoader);
-            Name = "MenuScene";
+            Name = "MenuView";
             Text = "MenuScene";
             ResumeLayout(false);
         }
@@ -73,7 +73,7 @@
         #endregion
 
         private Panel MenuFormLoader;
-        private Panel panel2;
+        private Panel DatabaseList;
         private Panel UserPanel;
     }
 }

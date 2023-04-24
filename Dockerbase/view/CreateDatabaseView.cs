@@ -1,4 +1,5 @@
 ﻿using DockerBase.model;
+using DockerBase.controller;
 
 namespace DockerBase.view
 {
@@ -6,11 +7,13 @@ namespace DockerBase.view
     {
         private DockerService service = new DockerService();
 
-        private MenuView menuScene;
+        private MenuView view;
+        private DatabaseTabController controller;
+        private DatabaseTab databaseView;
         public CreateDatabaseView(MenuView menuScene)
         {
             InitializeComponent();
-            this.menuScene = menuScene;
+            this.view = menuScene;
             _ = service.CreateMySQLImage();
         }
 
@@ -23,7 +26,9 @@ namespace DockerBase.view
         {
             String name = nameField.Text;
             _ = service.CreateDockerContainerAsync("rootpassword123", name);
-            menuScene.GetMenuFormLoader().Controls.Clear();
+            view.GetMenuFormLoader().Controls.Clear();
+            view.ShowContainers();
+
             this.Close();
         }
 

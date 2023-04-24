@@ -108,16 +108,17 @@ namespace DockerBase.model
                 new ContainersListParameters { All = true });
 
             var containerDict = new Dictionary<string, bool>();
-            if (containers.Any(c => c.Labels.Any(l => l.Value.Contains("Dockerbase"))))
+
+
+            foreach (var container in containers)
             {
-                foreach (var container in containers)
+                if (containers.Any(c => c.Labels.Any(l => l.Value.Contains("Dockerbase"))))
                 {
                     var name = container.Names[0].Substring(1);
                     var isRunning = container.State == "running";
                     containerDict.Add(name, isRunning);
+                    return containerDict;
                 }
-
-                return containerDict;
             }
             return null;
         }
