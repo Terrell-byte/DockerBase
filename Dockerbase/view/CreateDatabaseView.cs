@@ -5,16 +5,16 @@ namespace DockerBase.view
 {
     public partial class CreateDatabaseView : Form
     {
-        private DockerService service = new DockerService();
+        private DockerService docker = new DockerService();
 
         private MenuView view;
         private DatabaseTabController controller;
         private DatabaseTab databaseView;
-        public CreateDatabaseView(MenuView menuScene)
+        public CreateDatabaseView(MenuView menuView)
         {
             InitializeComponent();
-            this.view = menuScene;
-            _ = service.CreateMySQLImage();
+            this.view = menuView;
+            _ = docker.CreateMySQLImage();
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -25,7 +25,7 @@ namespace DockerBase.view
         private void createDatabaseButton_Click(object sender, EventArgs e)
         {
             String name = nameField.Text;
-            _ = service.CreateDockerContainerAsync("rootpassword123", name);
+            _ = docker.CreateDockerContainerAsync("rootpassword123", name);
             view.GetMenuFormLoader().Controls.Clear();
             view.ShowContainers();
 
