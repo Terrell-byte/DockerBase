@@ -1,6 +1,7 @@
 ﻿using Docker.DotNet;
 using Docker.DotNet.Models;
 using DockerBase.controller;
+using DockerBase.view;
 using MySqlX.XDevAPI;
 using System.ComponentModel;
 using System.Net.Sockets;
@@ -12,7 +13,7 @@ namespace DockerBase.model
         private readonly DockerClient dockerClient;
         public List<Dictionary<string, string>> containerList = new List<Dictionary<string, string>>();
         private CancellationTokenSource cts = new CancellationTokenSource();
-        private MenuController menuController { get; set; }
+        private MenuView menuView = new MenuView();
 
         public DockerService()
         {
@@ -28,7 +29,6 @@ namespace DockerBase.model
             {
                 throw new Exception("Unknown operating system.");
             }
-            
         }
 
                 private static readonly DockerService instance = new DockerService();
@@ -130,6 +130,7 @@ namespace DockerBase.model
 
         private async Task UpdateContainersList(CancellationToken token)
         {
+            MenuController menuController = new MenuController(menuView);
             while (!token.IsCancellationRequested)
             {
                 try
@@ -162,8 +163,12 @@ namespace DockerBase.model
                         containerList = newContainerList;
                         // Wait for a minute before updating the list again
                         await Task.Delay(TimeSpan.FromSeconds(1), token);
+                        menuController.LoadContainers(containerList);
+                        menuView.RemoveDeletedContainers(containerList, menuView.initializedTabs);
                     }
                     containerList = newContainerList;
+                    menuController.LoadContainers(containerList);
+                    menuView.RemoveDeletedContainers(containerList, menuView.initializedTabs);
                 }
                 catch (Exception ex)
                 {

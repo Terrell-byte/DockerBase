@@ -8,6 +8,7 @@ namespace DockerBase.view
         private MenuController menuController;
         private DatabaseTabController databaseTabController;
         private DockerService docker = DockerService.Instance;
+        public Dictionary<string, DatabaseTab> initializedTabs = new Dictionary<string, DatabaseTab>();
         public MenuView()
         {
             InitializeComponent();
@@ -37,7 +38,6 @@ namespace DockerBase.view
         public async Task ShowContainers(List<Dictionary<string, string>> containers)
         {
             this.DatabaseList.Controls.Clear();
-    
             foreach (var container in containers)
             {
                 var databaseTab = new DatabaseTab()
@@ -50,8 +50,36 @@ namespace DockerBase.view
                 databaseTabController.SetTabName(databaseTab, container["Name"]);
                 this.DatabaseList.Controls.Add(databaseTab);
                 databaseTab.Show();
+
+                initializedTabs.Add(container["Name"], databaseTab);
             }
         }
+
+        public void RemoveDeletedContainers(List<Dictionary<string, string>> containers, Dictionary<string, DatabaseTab> initializedTabs)
+        {
+            List<string> containerNames = new List<string>();
+            foreach (var container in containers)
+            {
+                containerNames.Add(container["Name"]);
+            }
+
+            var tabsToRemove = new List<string>();
+            foreach (var initializedTab in initializedTabs)
+            {
+                if (!containerNames.Contains(initializedTab.Key))
+                {
+                    initializedTab.Value.Dispose();
+                    tabsToRemove.Add(initializedTab.Key);
+                }
+            }
+
+            foreach (var tabToRemove in tabsToRemove)
+            {
+                initializedTabs.Remove(tabToRemove);
+            }
+        }
+
+
 
 
         public Panel GetMenuFormLoader()
