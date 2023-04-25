@@ -1,24 +1,24 @@
 ﻿using Docker.DotNet;
 using Docker.DotNet.Models;
+using DockerBase.controller;
 using MySqlX.XDevAPI;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
-
-
+using System.ComponentModel;
+using System.Net.Sockets;
 
 namespace DockerBase.model
 {
     public class DockerService
     {
         private readonly DockerClient dockerClient;
+        public List<Dictionary<string, string>> containerList = new List<Dictionary<string, string>>();
+        private CancellationTokenSource cts = new CancellationTokenSource();
+        private MenuController menuController { get; set; }
 
         public DockerService()
         {
             if (OperatingSystem.IsWindows())
             {
                 dockerClient = new DockerClientConfiguration(new Uri("npipe://./pipe/docker_engine")).CreateClient();
-
             }
             else if (OperatingSystem.IsLinux())
             {
@@ -29,7 +29,14 @@ namespace DockerBase.model
                 throw new Exception("Unknown operating system.");
             }
             
-    }
+        }
+
+                private static readonly DockerService instance = new DockerService();
+
+        public static DockerService Instance
+        {
+            get { return instance; }
+        }
 
         public async Task CreateMySQLImage()
         {
@@ -110,26 +117,69 @@ namespace DockerBase.model
 
             return usedPorts;
         }
-        public async Task<Dictionary<string, bool>> GetContainers()
+
+        public async Task Start()
         {
-            var containers = await dockerClient.Containers.ListContainersAsync(
-                new ContainersListParameters { All = true });
+            await UpdateContainersList(cts.Token);
+        }
 
-            var containerDict = new Dictionary<string, bool>();
+        public async Task Stop()
+        {
+            cts.Cancel();
+        }
 
-            foreach (var container in containers)
+        private async Task UpdateContainersList(CancellationToken token)
+        {
+            while (!token.IsCancellationRequested)
             {
-                if (containers.Any(c => c.Labels.Any(l => l.Value.Contains("Dockerbase"))))
+                try
                 {
-                    var name = container.Names[0].Substring(1);
-                    var isRunning = container.State == "running";
-                    containerDict.Add(name, isRunning);
-                    return containerDict;
+                    var containers = await dockerClient.Containers.ListContainersAsync(
+                        new ContainersListParameters { All = true });
+
+                    var newContainerList = new List<Dictionary<string, string>>();
+
+                    if (containers.Any(c => c.Labels.Any(l => l.Value.Contains("Dockerbase"))))
+                    {
+                        foreach (var container in containers)
+                        {
+                            if (container.Labels.Any(l => l.Value.Contains("Dockerbase")))
+                            {
+                                var containerInfo = new Dictionary<string, string>
+                                {
+                                    {"Name", container.Names[0]},
+                                    {"ID", container.ID},
+                                    {"Image", container.Image},
+                                    {"Status", container.Status},
+                                    {"State", container.State},
+                                    {"Created", container.Created.ToString()},
+                                    {"Ports", string.Join(", ", container.Ports.Select(p => $"{p.PrivatePort}:{p.PublicPort}"))},
+                                    {"Labels", string.Join(", ", container.Labels.Select(l => $"{l.Key}={l.Value}"))}
+                                };
+                                newContainerList.Add(containerInfo);
+                            }
+                        }
+                        containerList = newContainerList;
+                        // Wait for a minute before updating the list again
+                        await Task.Delay(TimeSpan.FromSeconds(1), token);
+                    }
+                    containerList = newContainerList;
+                }
+                catch (Exception ex)
+                {
+                    // Log the exception and retry after a minute
+                    Console.WriteLine($"Error while updating container list: {ex.Message}");
+                    await Task.Delay(TimeSpan.FromSeconds(5), token);
                 }
             }
-            return null;
         }
-    }   
+
+        public async Task<List<Dictionary<string, string>>> GetContainers()
+        {
+            return containerList;
+        }
+
+    }
 
     public class ContainerInfo
     {

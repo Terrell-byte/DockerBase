@@ -5,11 +5,10 @@ namespace DockerBase.view
 {
     public partial class CreateDatabaseView : Form
     {
-        private DockerService docker = new DockerService();
+        private DockerService docker = DockerService.Instance;
 
         private MenuView view;
-        private DatabaseTabController controller;
-        private DatabaseTab databaseView;
+        private MenuController controller;
         public CreateDatabaseView(MenuView menuView)
         {
             InitializeComponent();
@@ -27,7 +26,7 @@ namespace DockerBase.view
             String name = nameField.Text;
             _ = docker.CreateDockerContainerAsync("rootpassword123", name);
             view.GetMenuFormLoader().Controls.Clear();
-            view.ShowContainers();
+            view.MenuScene_Load(sender, e);
 
             this.Close();
         }
