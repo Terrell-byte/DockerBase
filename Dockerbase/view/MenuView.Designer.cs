@@ -65,6 +65,7 @@
             Controls.Add(UserPanel);
             Controls.Add(DatabaseList);
             Controls.Add(MenuFormLoader);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             Name = "MenuView";
             Text = "MenuScene";
             ResumeLayout(false);

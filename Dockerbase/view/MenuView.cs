@@ -51,15 +51,13 @@ namespace DockerBase.view
         public async Task ShowContainers(List<Dictionary<string, string>> containers)
         {
             this.DatabaseList.Controls.Clear();
+            //here we need to create a createNewDatabase button
+            AddDatabaseButton createNewDatabaseButton = new AddDatabaseButton() { Dock = DockStyle.Top, TopLevel = false, TopMost = true };
+            this.DatabaseList.Controls.Add(createNewDatabaseButton);
+            createNewDatabaseButton.Show();
             foreach (var container in containers)
             {
                 string containerName = container["Name"];
-
-                if (initializedTabs.Any(tab => tab.DatabaseName == containerName))
-                {
-                    // tab with same name already exists, skip creating a new one
-                    continue;
-                }
 
                 var databaseTab = new DatabaseTab()
                 {

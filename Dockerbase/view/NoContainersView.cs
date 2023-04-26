@@ -15,7 +15,7 @@ namespace DockerBase.view
         public NoContainersView(MenuView menuScene)
         {
             InitializeComponent();
-            controller = new NoContainersController(menuScene, createDatabase);
+            controller = new NoContainersController();
             view = menuScene;
         }
 
