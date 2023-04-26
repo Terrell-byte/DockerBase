@@ -7,6 +7,7 @@ namespace DockerBase.controller
     {
         private LoginView view;
         private UserModel model;
+        private MenuView menuView = MenuView.Instance;
         public LoginController(LoginView view, UserModel model)
         {
             this.view = view;
@@ -24,7 +25,8 @@ namespace DockerBase.controller
             if (isValid)
             {
                 MessageBox.Show("Login successful!");
-                new MenuView().Show();
+                //get our menuView instance from the singleton class
+                menuView.Show();
                 view.Hide();
             }
             else

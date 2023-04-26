@@ -9,6 +9,19 @@ namespace DockerBase.view
         private DatabaseTabController databaseTabController;
         private DockerService docker = DockerService.Instance;
         public List<DatabaseTab> initializedTabs = new List<DatabaseTab>();
+        //lets make this a singleton class
+        private static MenuView instance;
+        public static MenuView Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new MenuView();
+                }
+                return instance;
+            }
+        }
         public MenuView()
         {
             InitializeComponent();
@@ -40,6 +53,14 @@ namespace DockerBase.view
             this.DatabaseList.Controls.Clear();
             foreach (var container in containers)
             {
+                string containerName = container["Name"];
+
+                if (initializedTabs.Any(tab => tab.DatabaseName == containerName))
+                {
+                    // tab with same name already exists, skip creating a new one
+                    continue;
+                }
+
                 var databaseTab = new DatabaseTab()
                 {
                     Dock = DockStyle.Top,
@@ -47,13 +68,14 @@ namespace DockerBase.view
                     TopMost = true,
                     FormBorderStyle = FormBorderStyle.None,
                 };
-                databaseTabController.SetTabName(databaseTab, container["Name"]);
+
+                databaseTabController.SetTabName(databaseTab, containerName);
                 this.DatabaseList.Controls.Add(databaseTab);
                 databaseTab.Show();
-
                 initializedTabs.Add(databaseTab);
             }
         }
+
 
         public void RemoveDeletedContainers(List<Dictionary<string, string>> containers, List<DatabaseTab> initializedTabs)
         {
@@ -63,18 +85,18 @@ namespace DockerBase.view
                 containerNames.Add(container["Name"]);
             }
 
-            var tabsToRemove = new List<string>();
-            foreach (var initializedTab in initializedTabs)
+            for (int i = initializedTabs.Count - 1; i >= 0; i--)
             {
-                if (!containerNames.Contains(initializedTab.Name))
+                var initializedTab = initializedTabs[i];
+                if (!containerNames.Contains(initializedTab.DatabaseName))
                 {
-                    initializedTab.Dispose();
-                    initializedTabs.Remove(initializedTab);
+                    this.DatabaseList.Controls.Remove(initializedTab);
+                    initializedTab.Close();
+                    initializedTabs.RemoveAt(i);
+                    menuController.LoadContainers(docker.containerList);
                 }
             }
         }
-
-
 
 
         public Panel GetMenuFormLoader()

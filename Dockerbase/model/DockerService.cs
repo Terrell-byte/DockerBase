@@ -13,7 +13,7 @@ namespace DockerBase.model
         private readonly DockerClient dockerClient;
         public List<Dictionary<string, string>> containerList = new List<Dictionary<string, string>>();
         private CancellationTokenSource cts = new CancellationTokenSource();
-        private MenuView menuView = new MenuView();
+        private static DockerService instance;
 
         public DockerService()
         {
@@ -31,11 +31,16 @@ namespace DockerBase.model
             }
         }
 
-                private static readonly DockerService instance = new DockerService();
-
         public static DockerService Instance
         {
-            get { return instance; }
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new DockerService();
+                }
+                return instance;
+            }
         }
 
         public async Task CreateMySQLImage()
@@ -130,6 +135,7 @@ namespace DockerBase.model
 
         private async Task UpdateContainersList(CancellationToken token)
         {
+            var menuView = MenuView.Instance;
             MenuController menuController = new MenuController(menuView);
             while (!token.IsCancellationRequested)
             {
@@ -163,11 +169,9 @@ namespace DockerBase.model
                         containerList = newContainerList;
                         // Wait for a minute before updating the list again
                         await Task.Delay(TimeSpan.FromSeconds(1), token);
-                        menuController.LoadContainers(containerList);
                         menuView.RemoveDeletedContainers(containerList, menuView.initializedTabs);
                     }
-                    containerList = newContainerList;
-                    menuController.LoadContainers(containerList);
+                    containerList = newContainerList;        
                     menuView.RemoveDeletedContainers(containerList, menuView.initializedTabs);
                 }
                 catch (Exception ex)
