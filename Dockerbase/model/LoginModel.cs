@@ -3,11 +3,11 @@ using System.Data;
 
 namespace DockerBase.model
 {
-    internal class UserModel
+    internal class LoginModel
     {
         private string connectionString;
 
-        public UserModel()
+        public LoginModel()
         {
             connectionString = "server=127.0.0.1;user=root;database=userDB;port=3306;password=rootpassword;";
         }

@@ -10,7 +10,7 @@ namespace DockerBase.view
         public LoginView()
         {
             InitializeComponent();
-            controller = new LoginController(this, new UserModel());
+            controller = new LoginController(this, new LoginModel());
         }
 
         public string Username

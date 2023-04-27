@@ -7,10 +7,10 @@ namespace DockerBase.view
     {
         private MenuController menuController;
         private DatabaseTabController databaseTabController;
-        private DockerService docker = DockerService.Instance;
+        private DockerController dockerController = new DockerController(DockerModel.Instance);
         public List<DatabaseTab> initializedTabs = new List<DatabaseTab>();
         //lets make this a singleton class
-        private static MenuView instance;
+        private static MenuView? instance;
         public static MenuView Instance
         {
             get
@@ -26,18 +26,19 @@ namespace DockerBase.view
         {
             InitializeComponent();
             menuController = new MenuController(this);
+
             databaseTabController = new DatabaseTabController(this);
             Load += MenuScene_Load;
         }
         public async void MenuScene_Load(object sender, EventArgs e)
         {
             // Start the service
-            docker.Start();
+            _ = DockerModel.Instance.Start();
 
             await Task.Delay(2000);
 
             // Load the containers
-            menuController.LoadContainers(docker.containerList);
+            menuController.LoadContainers(DockerModel.Instance.containerList);
         }
 
         public void ShowNoContainersFound()
@@ -48,7 +49,7 @@ namespace DockerBase.view
             this.MenuFormLoader.Controls.Add(noContainersFound);
             noContainersFound.Show();
         }
-        public async Task ShowContainers(List<Dictionary<string, string>> containers)
+        public void ShowContainers(List<Dictionary<string, string>> containers)
         {
             this.DatabaseList.Controls.Clear();
             //here we need to create a createNewDatabase button
@@ -73,29 +74,6 @@ namespace DockerBase.view
                 initializedTabs.Add(databaseTab);
             }
         }
-
-
-        public void RemoveDeletedContainers(List<Dictionary<string, string>> containers, List<DatabaseTab> initializedTabs)
-        {
-            List<string> containerNames = new List<string>();
-            foreach (var container in containers)
-            {
-                containerNames.Add(container["Name"]);
-            }
-
-            for (int i = initializedTabs.Count - 1; i >= 0; i--)
-            {
-                var initializedTab = initializedTabs[i];
-                if (!containerNames.Contains(initializedTab.DatabaseName))
-                {
-                    this.DatabaseList.Controls.Remove(initializedTab);
-                    initializedTab.Close();
-                    initializedTabs.RemoveAt(i);
-                    menuController.LoadContainers(docker.containerList);
-                }
-            }
-        }
-
 
         public Panel GetMenuFormLoader()
         {

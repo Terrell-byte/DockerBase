@@ -6,9 +6,9 @@ namespace DockerBase.controller
     internal class LoginController
     {
         private LoginView view;
-        private UserModel model;
+        private LoginModel model;
         private MenuView menuView = MenuView.Instance;
-        public LoginController(LoginView view, UserModel model)
+        public LoginController(LoginView view, LoginModel model)
         {
             this.view = view;
             this.model = model;
