@@ -9,7 +9,7 @@ namespace DockerBase.model
     {
         public DockerClient dockerClient;
         public List<Dictionary<string, string>> containerList = new List<Dictionary<string, string>>();
-        private CancellationTokenSource cts;
+        private bool isRunning = false;
         private static DockerModel? instance;
 
         public DockerModel()
@@ -73,26 +73,27 @@ namespace DockerBase.model
         }
 
         public async Task Start()
-        {
-            cts = new CancellationTokenSource();
-            await UpdateContainersList(cts.Token);
+        {   
+            if (isRunning)
+            {
+                return;
+            }
+            isRunning = true;
+            await UpdateContainersList(isRunning);
         }
 
         public void Stop()
         {
-            cts.Cancel();
+            isRunning = false;
         }
 
-        private async Task UpdateContainersList(CancellationToken token)
+        private async Task UpdateContainersList(bool _isRunning)
         {
             MenuController menuController = new MenuController(MenuView.Instance);
-            while (!token.IsCancellationRequested)
+            while (isRunning == true)
             {
                 try
                 {
-                    // Check the cancellation token
-                    token.ThrowIfCancellationRequested();
-
                     var containers = await dockerClient.Containers.ListContainersAsync(
                         new ContainersListParameters { All = true });
 
@@ -120,7 +121,7 @@ namespace DockerBase.model
                         }
                         containerList = newContainerList;
                         // Wait for a minute before updating the list again
-                        await Task.Delay(TimeSpan.FromSeconds(1), token);
+                        await Task.Delay(TimeSpan.FromSeconds(1));
                         menuController.RemoveDeletedContainers(containerList, MenuView.Instance.initializedTabs);
                     }
                     containerList = newContainerList;
@@ -135,7 +136,7 @@ namespace DockerBase.model
                 {
                     // Log the exception and retry after a minute
                     Console.WriteLine($"Error while updating container list: {ex.Message}");
-                    await Task.Delay(TimeSpan.FromSeconds(5), token);
+                    await Task.Delay(TimeSpan.FromSeconds(5));
                 }
             }
         }
