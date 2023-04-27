@@ -6,7 +6,19 @@ namespace DockerBase.view
 {
     public partial class LoginView : Form
     {
+        private static LoginView instance;
 
+        public static LoginView Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new LoginView();
+                }
+                return instance;
+            }
+        }
         public LoginView()
         {
             InitializeComponent();

@@ -39,6 +39,10 @@ namespace DockerBase.view
 
             // Load the containers
             menuController.LoadContainers(DockerModel.Instance.containerList);
+            //lets get the username from the login view that is not a singleton class
+
+            var username = LoginView.Instance.Username;
+            this.usernameTitle.Text = username;
         }
 
         public void ShowNoContainersFound()

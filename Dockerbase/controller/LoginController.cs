@@ -32,8 +32,8 @@ namespace DockerBase.controller
             else
             {
                 MessageBox.Show("Invalid username or password!");
-                username = null;
-                password = null;
+                view.Username = null;
+                view.Password = null;
             }
         }
     }
