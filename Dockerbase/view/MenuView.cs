@@ -1,5 +1,6 @@
 ﻿using DockerBase.controller;
 using DockerBase.model;
+using Org.BouncyCastle.Asn1.BC;
 
 namespace DockerBase.view
 {
@@ -77,6 +78,16 @@ namespace DockerBase.view
                 databaseTab.Show();
                 initializedTabs.Add(databaseTab);
             }
+        }
+
+        public void SetContent(ContentView contentView)
+        {
+            //lets load the ContentView to the MenuFormLoader
+            this.MenuFormLoader.Controls.Clear();
+            contentView.FormBorderStyle = FormBorderStyle.None;
+            this.MenuFormLoader.Controls.Add(contentView);
+            contentView.Show();
+
         }
 
         public Panel GetMenuFormLoader()

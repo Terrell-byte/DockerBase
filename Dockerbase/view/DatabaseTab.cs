@@ -20,7 +20,9 @@ namespace DockerBase.view
 
         private void Tab_Click(object sender, EventArgs e)
         {
-
+            //call the controller to focus the tab
+            DatabaseTabController controller = new DatabaseTabController();
+            controller.focusTab(this);
         }
 
         public String DatabaseName

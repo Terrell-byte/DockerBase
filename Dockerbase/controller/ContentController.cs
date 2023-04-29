@@ -1,12 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DockerBase.model;
+using System.Data;
 
 namespace DockerBase.controller
 {
     internal class ContentController
     {
+        private ContentModel _model;
+
+        public ContentController()
+        {
+            _model = new ContentModel();
+        }
+
+        public DataTable DatabaseInfo(string password, string port)
+        {
+            return _model.GetContent(password, port);
+        }
     }
 }

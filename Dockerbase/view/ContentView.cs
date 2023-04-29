@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DockerBase.controller;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,9 +13,36 @@ namespace DockerBase.view
 {
     public partial class ContentView : Form
     {
+        private ContentController controller;
+        private static ContentView? instance;
+
+        public static ContentView Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new ContentView();
+                }
+                return instance;
+            }
+        }
         public ContentView()
         {
             InitializeComponent();
+            controller = new ContentController();
+        }
+
+        private void ContentView_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        public void LoadData(string password, string port)
+        {
+            string _password = password;
+            string _port = port;
+            dataGridView1.DataSource = controller.DatabaseInfo(password, port);
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)

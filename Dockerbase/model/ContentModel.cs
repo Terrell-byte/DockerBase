@@ -1,6 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
 using System.Data;
-using System.Windows.Forms;
 
 namespace DockerBase.model
 {
