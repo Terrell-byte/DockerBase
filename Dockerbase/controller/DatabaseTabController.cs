@@ -27,7 +27,7 @@ namespace DockerBase.controller
             string name = databaseTab.DatabaseName;
             ContentController content = new ContentController();
             //lets get the name and port of the database in the docker container
-            ContentView.Instance.LoadData("rootpassword", "1");
+            ContentView.Instance.LoadData("rootpassword123", "1");
             MenuView.Instance.SetContent(ContentView.Instance);
         }
 

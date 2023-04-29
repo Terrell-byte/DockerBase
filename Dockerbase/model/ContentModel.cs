@@ -10,16 +10,24 @@ namespace DockerBase.model
             string connectionString = "server=127.0.0.1;user=root;database=userDB;port=" + port + ";password="+ password +";";
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
-                connection.Open();
-                string query = "SELECT * FROM users";
-                using (MySqlCommand command = new MySqlCommand(query, connection))
+                try
                 {
-                    using (MySqlDataAdapter adapter = new MySqlDataAdapter(command))
+                    connection.Open();
+                    string query = "SELECT * FROM users";
+                    using (MySqlCommand command = new MySqlCommand(query, connection))
                     {
-                        DataTable table = new DataTable();
-                        adapter.Fill(table);
-                        return table;
+                        using (MySqlDataAdapter adapter = new MySqlDataAdapter(command))
+                        {
+                            DataTable table = new DataTable();
+                            adapter.Fill(table);
+                            return table;
+                        }
                     }
+                }
+                catch (MySqlException e)
+                {
+                    System.Windows.Forms.MessageBox.Show(e.Message);
+                    return null;
                 }
             }
         }
