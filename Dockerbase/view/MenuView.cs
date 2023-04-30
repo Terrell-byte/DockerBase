@@ -1,6 +1,6 @@
 ﻿using DockerBase.controller;
 using DockerBase.model;
-using Org.BouncyCastle.Asn1.BC;
+using System.Text.RegularExpressions;
 
 namespace DockerBase.view
 {
@@ -64,6 +64,11 @@ namespace DockerBase.view
             foreach (var container in containers)
             {
                 string containerName = container["Name"];
+                string portsString = container["Ports"];
+
+                // Extract the desired port number
+                var portMatch = Regex.Match(portsString, @"3306:(\d+)");
+                string containerPort = portMatch.Success ? portMatch.Groups[1].Value : string.Empty;
 
                 var databaseTab = new DatabaseTab()
                 {
@@ -73,12 +78,16 @@ namespace DockerBase.view
                     FormBorderStyle = FormBorderStyle.None,
                 };
 
-                databaseTabController.SetTabName(databaseTab, containerName);
+                // Update the method call
+                databaseTabController.SetTabName(databaseTab, containerName, containerPort);
+                databaseTab.ContainerPort = containerPort; // Set the ContainerPort property
                 this.DatabaseList.Controls.Add(databaseTab);
                 databaseTab.Show();
                 initializedTabs.Add(databaseTab);
             }
         }
+
+
 
         public void SetContent(ContentView contentView)
         {

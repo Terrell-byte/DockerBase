@@ -30,5 +30,7 @@ namespace DockerBase.view
             get { return Tab.Text; }
             set { Tab.Text = value; }
         }
+        public string ContainerPort { get; set; }
+        public string Password { get; set; }
     }
 }

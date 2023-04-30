@@ -1,4 +1,5 @@
 ﻿using DockerBase.view;
+using System.Runtime.CompilerServices;
 
 namespace DockerBase.controller
 {
@@ -16,9 +17,10 @@ namespace DockerBase.controller
         }
 
         // set the text in the button to the name of the database
-        public void SetTabName(DatabaseTab databaseTab, string name)
+        public void SetTabName(DatabaseTab databaseTab, string name, string port)
         {
             databaseTab.DatabaseName = name;
+            databaseTab.ContainerPort = port;
         }
 
         public void focusTab(DatabaseTab databaseTab)
@@ -27,7 +29,7 @@ namespace DockerBase.controller
             string name = databaseTab.DatabaseName;
             ContentController content = new ContentController();
             //lets get the name and port of the database in the docker container
-            ContentView.Instance.LoadData("rootpassword", "3306");
+            ContentView.Instance.LoadData("rootpassword123", databaseTab.ContainerPort);
             MenuView.Instance.SetContent(ContentView.Instance);
         }
 
