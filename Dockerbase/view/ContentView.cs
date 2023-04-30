@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace DockerBase.view
 {
-    public partial class ContentView : Form
+    public partial class ContentView : UserControl
     {
         private ContentController controller;
         private static ContentView? instance;

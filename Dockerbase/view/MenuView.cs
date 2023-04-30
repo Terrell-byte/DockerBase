@@ -84,7 +84,6 @@ namespace DockerBase.view
         {
             //lets load the ContentView to the MenuFormLoader
             this.MenuFormLoader.Controls.Clear();
-            contentView.FormBorderStyle = FormBorderStyle.None;
             this.MenuFormLoader.Controls.Add(contentView);
             contentView.Show();
 

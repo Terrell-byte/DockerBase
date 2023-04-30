@@ -93,7 +93,6 @@
             Controls.Add(flowLayoutPanel2);
             Controls.Add(flowLayoutPanel1);
             Controls.Add(dataGridView1);
-            FormBorderStyle = FormBorderStyle.None;
             Name = "ContentView";
             Text = "ContentView";
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
