@@ -45,7 +45,7 @@ namespace DockerBase.controller
                     PortBindings = new Dictionary<string, IList<PortBinding>>
                     {
                         { "3306/tcp", new List<PortBinding> { new PortBinding { HostPort = $"{port}/tcp" } } }
-                    }
+                    }   
                 }
             };
             var container = await DockerModel.Instance.dockerClient.Containers.CreateContainerAsync(containerCreateParameters);

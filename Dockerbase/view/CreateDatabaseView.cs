@@ -13,6 +13,7 @@ namespace DockerBase.view
             InitializeComponent();
             DockerModel.Instance.Start();
             view = menuView;
+            this.Load += CreateDatabaseView_Load;
         }
 
         public static CreateDatabaseView Instance
@@ -26,8 +27,12 @@ namespace DockerBase.view
                 return instance;
             }
         }
+        private void CreateDatabaseView_Load(object sender, EventArgs e)
+        {
+            containerType.Items.Add("AuthDB");
+        }
 
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void containerType_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }

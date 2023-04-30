@@ -83,7 +83,7 @@
             containerType.Name = "containerType";
             containerType.Size = new Size(224, 23);
             containerType.TabIndex = 4;
-            containerType.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
+            containerType.SelectedIndexChanged += containerType_SelectedIndexChanged;
             // 
             // createDatabaseButton
             // 
