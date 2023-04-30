@@ -46,9 +46,13 @@
             dataGridView1.Size = new Size(662, 260);
             dataGridView1.TabIndex = 0;
             dataGridView1.CellContentClick += dataGridView1_CellContentClick;
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            dataGridView1.ReadOnly = true;
             // 
             // flowLayoutPanel1
             // 
+            flowLayoutPanel1.BackColor = Color.Gray;
             flowLayoutPanel1.Location = new Point(19, 392);
             flowLayoutPanel1.Margin = new Padding(10);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
@@ -58,6 +62,7 @@
             // 
             // flowLayoutPanel2
             // 
+            flowLayoutPanel2.BackColor = Color.Gray;
             flowLayoutPanel2.Location = new Point(19, 204);
             flowLayoutPanel2.Margin = new Padding(10);
             flowLayoutPanel2.Name = "flowLayoutPanel2";
@@ -67,6 +72,7 @@
             // 
             // flowLayoutPanel3
             // 
+            flowLayoutPanel3.BackColor = Color.Gray;
             flowLayoutPanel3.Location = new Point(305, 19);
             flowLayoutPanel3.Margin = new Padding(10);
             flowLayoutPanel3.Name = "flowLayoutPanel3";
@@ -76,6 +82,7 @@
             // 
             // flowLayoutPanel4
             // 
+            flowLayoutPanel4.BackColor = Color.Gray;
             flowLayoutPanel4.Location = new Point(19, 19);
             flowLayoutPanel4.Margin = new Padding(10);
             flowLayoutPanel4.Name = "flowLayoutPanel4";
@@ -87,14 +94,13 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(986, 671);
             Controls.Add(flowLayoutPanel4);
             Controls.Add(flowLayoutPanel3);
             Controls.Add(flowLayoutPanel2);
             Controls.Add(flowLayoutPanel1);
             Controls.Add(dataGridView1);
             Name = "ContentView";
-            Text = "ContentView";
+            Size = new Size(986, 671);
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
         }
