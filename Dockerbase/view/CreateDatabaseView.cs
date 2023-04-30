@@ -37,10 +37,12 @@ namespace DockerBase.view
 
         }
 
-        private void createDatabaseButton_Click(object sender, EventArgs e)
+        private async void createDatabaseButton_Click(object sender, EventArgs e)
         {
             String name = nameField.Text;
-            _ = dockerController.CreateDockerContainerAsync("rootpassword123", name);
+            //create a condition if it is empty
+            string selectedType = containerType.SelectedItem.ToString();
+            await dockerController.CreateDockerContainerAsync("rootpassword123", name, selectedType);
             view.GetMenuFormLoader().Controls.Clear();
             view.MenuScene_Load(sender, e);
             this.Close();

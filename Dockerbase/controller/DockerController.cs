@@ -13,7 +13,7 @@ namespace DockerBase.controller
             dockerModel = model;
         }
 
-        public async Task<CreateContainerResponse> CreateDockerContainerAsync(string password, string name)
+        public async Task<CreateContainerResponse> CreateDockerContainerAsync(string password, string name, string type)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
@@ -30,7 +30,14 @@ namespace DockerBase.controller
                 port++;
             }
 
-            // Create the container with the next available port
+            // Copy the SQL file to the shared folder
+            string sharedFolderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SharedFolder");
+            Directory.CreateDirectory(sharedFolderPath);
+            string sourceSqlFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "templates", $"{type}.sql");
+            string destinationSqlFilePath = Path.Combine(sharedFolderPath, $"{type}.sql");
+            File.Copy(sourceSqlFilePath, destinationSqlFilePath, true);
+
+            // Create the container with the next available port and mount the shared folder as a volume
             var containerCreateParameters = new CreateContainerParameters
             {
                 Image = "mysql",
@@ -42,10 +49,11 @@ namespace DockerBase.controller
                 Env = new List<string> { "MYSQL_ROOT_PASSWORD=" + password },
                 HostConfig = new HostConfig
                 {
+                    Binds = new List<string> { $"{sharedFolderPath}:/docker-entrypoint-initdb.d" },
                     PortBindings = new Dictionary<string, IList<PortBinding>>
                     {
                         { "3306/tcp", new List<PortBinding> { new PortBinding { HostPort = $"{port}/tcp" } } }
-                    }   
+                    }
                 }
             };
             var container = await DockerModel.Instance.dockerClient.Containers.CreateContainerAsync(containerCreateParameters);
@@ -54,6 +62,5 @@ namespace DockerBase.controller
             await dockerModel.dockerClient.Containers.StartContainerAsync(container.ID, new ContainerStartParameters());
             return container;
         }
-        // Add additional methods as needed
     }
 }

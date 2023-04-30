@@ -36,7 +36,7 @@ namespace DockerBase.view
             // Start the service
             _ = DockerModel.Instance.Start();
 
-            await Task.Delay(2000);
+            await Task.Delay(1000);
 
             // Load the containers
             menuController.LoadContainers(DockerModel.Instance.containerList);
