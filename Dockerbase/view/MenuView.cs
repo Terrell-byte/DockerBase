@@ -8,7 +8,6 @@ namespace DockerBase.view
     {
         private MenuController menuController;
         private DatabaseTabController databaseTabController;
-        private DockerController dockerController = new DockerController(DockerModel.Instance);
         public List<DatabaseTab> initializedTabs = new List<DatabaseTab>();
         //lets make this a singleton class
         private static MenuView? instance;
@@ -36,7 +35,7 @@ namespace DockerBase.view
             // Start the service
             _ = DockerModel.Instance.Start();
 
-            await Task.Delay(1000);
+            await Task.Delay(2000);
 
             // Load the containers
             menuController.LoadContainers(DockerModel.Instance.containerList);
@@ -86,8 +85,6 @@ namespace DockerBase.view
                 initializedTabs.Add(databaseTab);
             }
         }
-
-
 
         public void SetContent(ContentView contentView)
         {

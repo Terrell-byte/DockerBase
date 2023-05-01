@@ -42,28 +42,8 @@ namespace DockerBase.view
         {
             string _password = password;
             string _port = port;
-            dataGridView1.DataSource = controller.DatabaseInfo(password, port);
-        }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void flowLayoutPanel1_Paint(object sender, PaintEventArgs e)
-        {
-        }
-
-        private void flowLayoutPanel3_Paint(object sender, PaintEventArgs e)
-        {
-        }
-
-        private void flowLayoutPanel2_Paint(object sender, PaintEventArgs e)
-        {
-        }
-
-        private void flowLayoutPanel4_Paint(object sender, PaintEventArgs e)
-        {
+            previewTables.DataSource = controller.DatabaseInfo(password, port);
+            recentEntries.DataSource = controller.GetRecentEntries(password, port);
         }
     }
 }

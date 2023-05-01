@@ -40,7 +40,7 @@ namespace DockerBase.model
             catch (Exception ex)
             {
                 // Log the exception or throw it to the Controller to handle
-                throw ex;
+                System.Windows.Forms.MessageBox.Show(ex.Message);
             }
             finally
             {
