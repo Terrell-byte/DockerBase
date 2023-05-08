@@ -1,0 +1,19 @@
+﻿<UserControl x:Class="DockerbaseWPF.Views.ContentView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DockerbaseWPF.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="700" d:DesignWidth="930" Foreground="{x:Null}" Background="#FFFFF4DF">
+    <Grid>
+        <Rectangle HorizontalAlignment="Left" Height="329" Margin="25,350,0,0" VerticalAlignment="Top" Width="292" Fill="White"/>
+        <Rectangle HorizontalAlignment="Left" Height="329" Margin="346,350,0,0" VerticalAlignment="Top" Width="554" Fill="White"/>
+        <Rectangle HorizontalAlignment="Left" Height="307" Margin="25,16,0,0" VerticalAlignment="Top" Width="440" Fill="White"/>
+        <Rectangle HorizontalAlignment="Left" Height="307" Margin="487,16,0,0" VerticalAlignment="Top" Width="254" Fill="White"/>
+        <Rectangle HorizontalAlignment="Left" Height="142" Margin="761,181,0,0" VerticalAlignment="Top" Width="149" Fill="White"/>
+        <Rectangle HorizontalAlignment="Left" Height="142" Margin="761,10,0,0" VerticalAlignment="Top" Width="149" Fill="White"/>
+        <DockPanel LastChildFill="False"/>
+
+    </Grid>
+</UserControl>

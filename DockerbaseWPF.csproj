@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net7.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Views\Login_design-fotor-bg-remover-202305049201.png" />
+    <None Remove="Views\logo.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Resources\fonts\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Docker.DotNet" Version="3.125.14" />
+    <PackageReference Include="MySql.Data" Version="8.0.33" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Views\Login_design-fotor-bg-remover-202305049201.png" />
+    <Resource Include="Views\logo.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Templates\User_Database.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

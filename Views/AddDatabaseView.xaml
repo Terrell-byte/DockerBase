@@ -1,0 +1,99 @@
+﻿<UserControl x:Class="DockerbaseWPF.Views.AddDatabase"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DockerbaseWPF.Views"
+             xmlns:viewModel="clr-namespace:DockerbaseWPF.ViewModels"
+             mc:Ignorable="d" 
+             d:DesignHeight="710" d:DesignWidth="950">
+    <UserControl.DataContext>
+        <viewModel:MenuViewModel/>
+    </UserControl.DataContext>
+
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisibility"/>
+    </UserControl.Resources>
+
+    <UserControl.Visibility>
+        <Binding Path="IsViewVisible" Mode="TwoWay" Converter="{StaticResource BoolToVisibility}"/>
+    </UserControl.Visibility>
+
+    <Grid Width="310" Height="710" Margin="10,0,630,0" Background="White">
+        <TextBlock HorizontalAlignment="Center" Height="42" Margin="0,10,0,0" TextWrapping="Wrap" Text="Add Database" VerticalAlignment="Top" Width="290" FontSize="24" Foreground="#FFFD9250" FontWeight="Bold"/>
+        <StackPanel HorizontalAlignment="Center" Height="436" Margin="0,52,0,0" VerticalAlignment="Top" Width="290">
+            <TextBlock TextWrapping="Wrap"
+                       Text="Name"
+                       HorizontalAlignment="Left"
+                       Margin="0,20,0,0"/>
+            
+            <TextBox TextWrapping="Wrap"
+                     Text="{Binding Name}"
+                     Width="250"
+                     HorizontalAlignment="Left"
+                     Margin="0,0,0,0"/>
+            
+            <TextBlock TextWrapping="Wrap"
+                       Text="Password"
+                       HorizontalAlignment="Left"
+                       Margin="0,20,0,0"/>
+
+            <TextBox TextWrapping="Wrap"
+                     Text="{Binding Password}"
+                     Width="250"
+                     HorizontalAlignment="Left"
+                     Margin="0,0,0,0"/>
+            
+            <TextBlock TextWrapping="Wrap"
+                      Text="Template"
+                      HorizontalAlignment="Left"
+                      Margin="0,20,0,0"/>
+
+            <ComboBox Width="250"
+                     HorizontalAlignment="Left"
+                     Margin="0,0,0,0"
+                     ItemsSource="{Binding Templates}"
+                     SelectedItem="{Binding SelectedDatabaseTemplate}"/>
+
+            <Button Content="Advanced"
+                    Background="{x:Null}"
+                    BorderBrush="{x:Null}"
+                    Foreground="#FFFD9250"
+                    HorizontalAlignment="Left"
+                    Margin="0,20,0,0"
+                    Command="{Binding ToggleDatabaseTypeCommand}"/>
+
+            <TextBlock TextWrapping="Wrap"
+                      Text="Database Type"
+                      HorizontalAlignment="Left"
+                      Margin="0,20,0,0"
+                      Visibility="{Binding ShowDatabaseType, Converter={StaticResource BoolToVisibility}}"/>
+
+            <ComboBox Width="250"
+                     HorizontalAlignment="Left"
+                     Margin="0,0,0,0"
+                     ItemsSource="{Binding DatabaseTypes}"
+                     SelectedItem="{Binding SelectedDatabaseType}"
+                     Visibility="{Binding ShowDatabaseType, Converter={StaticResource BoolToVisibility}}"/>
+            
+            <TextBlock TextWrapping="Wrap" 
+                       Text="{Binding ErrorMessage}"
+                       Foreground="Red"
+                       HorizontalAlignment="Center"
+                       Margin="0,50,0,0"/>
+
+
+
+        </StackPanel>
+        <Border CornerRadius="10" Background="#FFED5C3E" BorderBrush="White" Width="258" Height="46" Margin="26,609,26,55">
+            <Button Content="Add" 
+                    Height="46" Width="258"
+                    Background="{x:Null}" 
+                    FontFamily="VarelaRound" 
+                    BorderBrush="{x:Null}"
+                    Margin="0,0,0,0" 
+                    Foreground="White"
+                    Command="{Binding CreateDatabaseCommand}"/>
+        </Border>
+    </Grid>
+</UserControl>
