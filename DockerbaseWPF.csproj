@@ -14,7 +14,6 @@
     <None Remove="Resources\img\logo.png" />
     <None Remove="Views\Exit.png" />
     <None Remove="Views\icon _home.png" />
-    <None Remove="Views\Login_design-fotor-bg-remover-202305049201.png" />
     <None Remove="Views\logo.png" />
   </ItemGroup>
 

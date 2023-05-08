@@ -14,14 +14,13 @@
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVisibility"/>
     </Window.Resources>
-    
+
     <Window.Visibility>
         <Binding Path="IsViewVisible" Mode="TwoWay" Converter="{StaticResource BoolToVisibility}"/>
     </Window.Visibility>
-    
+
     <Grid>
         <Rectangle HorizontalAlignment="Left" Height="608" Margin="500,0,0,0" Stroke="White" VerticalAlignment="Center" Width="510" Fill="#FFE1995F"/>
-        <Image Margin="505,32,-5,52" Source="/Views/Login_design-fotor-bg-remover-202305049201.png" Width="500" Height="500"/>
         <StackPanel HorizontalAlignment="Left" Height="505" Margin="112,30,0,0" VerticalAlignment="Top" Width="258">
             <Image Height="103" Width="103"
                    Source="/Views/logo.png"
@@ -83,5 +82,6 @@
                         Foreground="Black"/>
             </Border>
         </StackPanel>
+        <Image Margin="505,32,-5,52" Source="/Resources/img/Login_design-fotor-bg-remover-202305049201.png" Width="500" Height="500" Stretch="None"/>
     </Grid>
 </Window>

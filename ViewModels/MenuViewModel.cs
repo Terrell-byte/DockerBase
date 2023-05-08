@@ -16,6 +16,7 @@ namespace DockerbaseWPF.ViewModels
         private UserControl _contentView;
         private ObservableCollection<string> _items = new ObservableCollection<string>();
         private string _loggedInUsername;
+        private string _container;
         public DockerViewModel DockerViewModel = new DockerViewModel();
 
         // ICommand
@@ -40,7 +41,12 @@ namespace DockerbaseWPF.ViewModels
         // Methods
         private void ExecuteCurrentContainerInFocus(object obj)
         {
-            ContentView = new ContentView();
+            Container = obj as string;
+            if (Container != null)
+            {
+                ContentView = new ContentView();
+                Messenger.Instance.Send("ContainerName", Container);
+            }
         }
         private void OnStringValueChanged(object sender, Messenger.StringEventArgs e)
         {
@@ -102,6 +108,15 @@ namespace DockerbaseWPF.ViewModels
             {
                 _loggedInUsername = value;
                 OnPropertyChanged(nameof(LoggedInUsername));
+            }
+        }
+        public string Container
+        {
+            get => _container;
+            set
+            {
+                _container = value;
+                OnPropertyChanged(nameof(Container));
             }
         }
     }

@@ -4,8 +4,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DockerbaseWPF.Views"
+             xmlns:viewModel="clr-namespace:DockerbaseWPF.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="700" d:DesignWidth="930" Foreground="{x:Null}" Background="#FFFFF4DF">
+    <UserControl.DataContext>
+        <viewModel:ContentViewModel/>
+    </UserControl.DataContext>
     <Grid>
         <Rectangle HorizontalAlignment="Left" Height="329" Margin="25,350,0,0" VerticalAlignment="Top" Width="292" Fill="White"/>
         <Rectangle HorizontalAlignment="Left" Height="329" Margin="346,350,0,0" VerticalAlignment="Top" Width="554" Fill="White"/>
@@ -14,6 +18,8 @@
         <Rectangle HorizontalAlignment="Left" Height="142" Margin="761,181,0,0" VerticalAlignment="Top" Width="149" Fill="White"/>
         <Rectangle HorizontalAlignment="Left" Height="142" Margin="761,10,0,0" VerticalAlignment="Top" Width="149" Fill="White"/>
         <DockPanel LastChildFill="False"/>
+        <DataGrid HorizontalAlignment="Left" Height="314" Margin="356,358,0,0" VerticalAlignment="Top" Width="534" d:ItemsSource="{d:SampleData ItemCount=5}"/>
+        <DataGrid HorizontalAlignment="Left" Height="314" Margin="34,358,0,0" VerticalAlignment="Top" Width="273" d:ItemsSource="{d:SampleData ItemCount=5}"/>
 
     </Grid>
 </UserControl>

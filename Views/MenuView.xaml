@@ -47,7 +47,8 @@
                                         Height="50" Background="{x:Null}"
                                         BorderBrush="White"
                                         Foreground="White"
-                                        Command="{Binding DataContext.FocusContainer, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ItemsControl}}"/>
+                                        Command="{Binding DataContext.FocusContainer, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ItemsControl}}"
+                                        CommandParameter="{Binding}"/>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
