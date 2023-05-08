@@ -19,12 +19,6 @@ namespace DockerbaseWPF.ViewModels
 
         public event EventHandler<IEnumerable<ContainerListResponse>> ContainerListUpdated;
 
-
-        public DockerViewModel()
-        {
-            Task.Run(ContainerListenerAsync);
-        }
-
         public async Task<CreateContainerResponse> CreateDockerContainerAsync(string name, string password, string template, string type)
         {
             // Retrieve a list of currently bound host ports
@@ -68,28 +62,6 @@ namespace DockerbaseWPF.ViewModels
             // Start the container
             await _model.dockerClient.Containers.StartContainerAsync(container.ID, new ContainerStartParameters());
             return container;
-        }
-        public async Task ContainerListenerAsync()
-        {
-            while (!_cancellationTokenSource.Token.IsCancellationRequested)
-            {
-                // Get the list of Dockerbase containers
-                var containers = await GetDockerbaseContainersAsync();
-
-                // Update the application's container list (You need to implement the UpdateContainerList method)
-                UpdateContainerList(containers);
-
-                // Wait for a specified interval before checking again
-                await Task.Delay(TimeSpan.FromSeconds(5), _cancellationTokenSource.Token);
-            }
-        }
-        private void UpdateContainerList(IEnumerable<ContainerListResponse> containers)
-        {
-            ContainerListUpdated?.Invoke(this, containers);
-        }
-        public void StopContainerListener()
-        {
-            _cancellationTokenSource.Cancel();
         }
 
         public async Task<IEnumerable<ContainerListResponse>> GetDockerbaseContainersAsync()

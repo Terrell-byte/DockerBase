@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Docker.DotNet.Models;
-using DockerbaseWPF.Models;
 using DockerbaseWPF.Views;
-using Org.BouncyCastle.Asn1.Mozilla;
+using System.Windows;
 
 namespace DockerbaseWPF.ViewModels
 {
@@ -30,7 +27,10 @@ namespace DockerbaseWPF.ViewModels
         {
             AddDatabaseCommand = new RelayCommand(ExecuteAddDatabase);
             Messenger.Instance.DatabaseAdded += OnDatabaseAdded;
-            FetchDockerbaseContainers();
+            Timer containerUpdateTimer = new Timer(1000);
+            containerUpdateTimer.Elapsed += async (sender, e) => await Task.Run(FetchDockerbaseContainers);
+            containerUpdateTimer.AutoReset = true;
+            containerUpdateTimer.Enabled = true;
         }
 
         //Methods
@@ -48,12 +48,24 @@ namespace DockerbaseWPF.ViewModels
         private async Task FetchDockerbaseContainers()
         {
             var containers = await DockerViewModel.GetDockerbaseContainersAsync();
-
-            foreach (var container in containers)
+            Application.Current.Dispatcher.Invoke(() =>
             {
-                string containerName = container.Names.First().TrimStart('/');
-                Items.Add(containerName);
-            }
+                // Clear the current list of Items
+                Items.Clear();
+
+                // Add the containers to the Items collection
+                foreach (var container in containers)
+                {
+                    Items.Add(container.Names.First().Substring(1));
+                }
+            });
+        }
+
+
+        //lets open the ContentView and pass the name of the container that is in focus so that all the information about that container can be displayed
+        private void CurrentContainerInFocus(string name)
+        {
+            throw new NotImplementedException();
         }
 
 
