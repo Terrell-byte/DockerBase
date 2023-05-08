@@ -13,8 +13,6 @@ namespace DockerbaseWPF.Models
     {
         public DockerClient dockerClient;
         public List<Dictionary<string, string>> containerList = new List<Dictionary<string, string>>();
-        private bool isRunning = false;
-
         public DockerModel()
         {
             if (OperatingSystem.IsWindows())

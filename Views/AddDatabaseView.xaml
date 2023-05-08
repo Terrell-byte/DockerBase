@@ -106,7 +106,7 @@
                 Foreground="{x:Null}">
             
             <Button.Background>
-                <ImageBrush ImageSource="/Views/Exit.png"/>
+                <ImageBrush ImageSource="/Resources/img/Exit.png"/>
             </Button.Background>
         </Button>
     </Grid>

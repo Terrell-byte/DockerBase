@@ -44,7 +44,10 @@
                                         DockPanel.Dock="Top"
                                         HorizontalAlignment="Stretch" 
                                         VerticalAlignment="Top"
-                                        Height="50" Background="{x:Null}" BorderBrush="White" Foreground="White"/>
+                                        Height="50" Background="{x:Null}"
+                                        BorderBrush="White"
+                                        Foreground="White"
+                                        Command="{Binding DataContext.FocusContainer, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ItemsControl}}"/>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>

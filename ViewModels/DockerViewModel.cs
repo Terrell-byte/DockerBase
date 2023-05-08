@@ -17,7 +17,6 @@ namespace DockerbaseWPF.ViewModels
 
         public IEnumerable<object> DockerContainers { get; internal set; }
 
-        public event EventHandler<IEnumerable<ContainerListResponse>> ContainerListUpdated;
 
         public async Task<CreateContainerResponse> CreateDockerContainerAsync(string name, string password, string template, string type)
         {

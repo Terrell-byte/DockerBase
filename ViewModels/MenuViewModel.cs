@@ -20,12 +20,13 @@ namespace DockerbaseWPF.ViewModels
 
         // ICommand
         public ICommand AddDatabaseCommand { get; }
-        public ICommand CreateScrollViewerItem { get; }
+        public ICommand FocusContainer { get; }
 
         // Constructor
         public MenuViewModel()
         {
             AddDatabaseCommand = new RelayCommand(ExecuteAddDatabase);
+            FocusContainer = new RelayCommand(ExecuteCurrentContainerInFocus);
 
             Messenger.Instance.StringValueChanged += OnStringValueChanged;
 
@@ -37,6 +38,10 @@ namespace DockerbaseWPF.ViewModels
         }
 
         // Methods
+        private void ExecuteCurrentContainerInFocus(object obj)
+        {
+            ContentView = new ContentView();
+        }
         private void OnStringValueChanged(object sender, Messenger.StringEventArgs e)
         {
             if (e.Key == "Username")
@@ -68,10 +73,7 @@ namespace DockerbaseWPF.ViewModels
                 }
             });
         }
-        private void CurrentContainerInFocus(string name)
-        {
-            throw new NotImplementedException();
-        }
+
 
         // Getters and Setters
         public UserControl ContentView

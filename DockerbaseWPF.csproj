@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\img\Exit.png" />
+    <None Remove="Resources\img\icon _home.png" />
+    <None Remove="Resources\img\Login_design-fotor-bg-remover-202305049201.png" />
+    <None Remove="Resources\img\logo.png" />
     <None Remove="Views\Exit.png" />
     <None Remove="Views\icon _home.png" />
     <None Remove="Views\Login_design-fotor-bg-remover-202305049201.png" />
@@ -24,10 +28,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Views\Exit.png" />
-    <Resource Include="Views\icon _home.png" />
-    <Resource Include="Views\Login_design-fotor-bg-remover-202305049201.png" />
-    <Resource Include="Views\logo.png" />
+    <Resource Include="Resources\img\Exit.png" />
+    <Resource Include="Resources\img\icon _home.png" />
+    <Resource Include="Resources\img\Login_design-fotor-bg-remover-202305049201.png" />
+    <Resource Include="Resources\img\logo.png" />
   </ItemGroup>
 
   <ItemGroup>

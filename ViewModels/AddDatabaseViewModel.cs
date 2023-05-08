@@ -17,7 +17,6 @@ namespace DockerbaseWPF.ViewModels
         private string _errorMessage;
         private bool _isViewVisible = true;
         private bool _showDatabaseType;
-        private bool _showDatabaseTemplate;
         DockerViewModel DockerViewModel = new DockerViewModel();
 
         //ICommands
