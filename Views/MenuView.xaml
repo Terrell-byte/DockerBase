@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="MenuView" Height="800" Width="1200" ResizeMode="CanMinimize">
     <Window.DataContext>
-        <viewModels:MenuViewModel />
+        <viewModels:MenuViewModel/>
     </Window.DataContext>
     <Grid Background="#FFFFF4DF">
         <ContentControl Content="{Binding ContentView}" 
@@ -25,10 +25,14 @@
                     VerticalAlignment="Top"
                     Height="50" Background="{x:Null}" BorderBrush="White" Foreground="White"
                     Command="{Binding AddDatabaseCommand}"/>
-                    <ItemsControl ItemsSource="{Binding DatabaseName}">
+                    <ItemsControl ItemsSource="{Binding Items}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <Button Content="{Binding}" Margin="5"/>
+                                <Button Content="{Binding}" 
+                                        DockPanel.Dock="Top"
+                                        HorizontalAlignment="Stretch" 
+                                        VerticalAlignment="Top"
+                                        Height="50" Background="{x:Null}" BorderBrush="White" Foreground="White"/>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
