@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DockerbaseWPF.ViewModels
 {
@@ -12,12 +8,19 @@ namespace DockerbaseWPF.ViewModels
 
         public static Messenger Instance => _instance ?? (_instance = new Messenger());
 
-        public event EventHandler<string> DatabaseAdded;
-
-        public void Send(string databaseName)
+        // Define a custom event argument class
+        public class StringEventArgs : EventArgs
         {
-            DatabaseAdded?.Invoke(this, databaseName);
+            public string Value { get; set; }
+            public string Key { get; set; }
+        }
+
+        // Use a generic event handler with custom event arguments
+        public event EventHandler<StringEventArgs> StringValueChanged;
+
+        public void Send(string key, string value)
+        {
+            StringValueChanged?.Invoke(this, new StringEventArgs { Key = key, Value = value });
         }
     }
-
 }

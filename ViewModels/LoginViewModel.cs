@@ -77,7 +77,8 @@ namespace DockerbaseWPF.ViewModels
             {
                 ErrorMessage = "";
                 IsViewVisible = false;
-                new MenuView().Show();                
+                new MenuView().Show();
+                Messenger.Instance.Send("Username", Username);
             }
             else
             {

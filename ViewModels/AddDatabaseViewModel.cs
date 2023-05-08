@@ -23,6 +23,7 @@ namespace DockerbaseWPF.ViewModels
         //ICommands
         public ICommand CreateDatabaseCommand { get; }
         public ICommand ToggleDatabaseTypeCommand { get; }
+        public ICommand CloseCommand { get; }
 
 
         //Constructor
@@ -30,6 +31,7 @@ namespace DockerbaseWPF.ViewModels
         {
             CreateDatabaseCommand = new RelayCommand(ExecuteCreateDatabase, CanExcuteCreateDatabase);
             ToggleDatabaseTypeCommand = new RelayCommand(ToggleDatabaseType);
+            CloseCommand = new RelayCommand(ExecuteCloseCommand);
 
             DatabaseTypes = new ObservableCollection<string>
             {
@@ -42,6 +44,10 @@ namespace DockerbaseWPF.ViewModels
             };
             SelectedDatabaseType = DatabaseTypes.FirstOrDefault();
         }
+        private void ExecuteCloseCommand(object obj)
+        {
+            IsViewVisible = false;
+        }
 
         private void ExecuteCreateDatabase(object obj)
         {
@@ -53,7 +59,7 @@ namespace DockerbaseWPF.ViewModels
                 IsViewVisible = false;
 
                 //lets now send our name to the main view so we can display it in the list of containers
-                Messenger.Instance.Send(Name);
+                Messenger.Instance.Send("ContainerName", Name);
             }
             else
             {

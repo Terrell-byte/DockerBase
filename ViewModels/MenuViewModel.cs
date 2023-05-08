@@ -12,31 +12,41 @@ namespace DockerbaseWPF.ViewModels
 {
     public class MenuViewModel : ViewModelBase
     {
-        //Variables
+        // Variables
         private UserControl _contentView;
         private ObservableCollection<string> _items = new ObservableCollection<string>();
+        private string _loggedInUsername;
         public DockerViewModel DockerViewModel = new DockerViewModel();
 
-        //ICommands
+        // ICommand
         public ICommand AddDatabaseCommand { get; }
         public ICommand CreateScrollViewerItem { get; }
 
-        //Constructor
+        // Constructor
         public MenuViewModel()
-
         {
             AddDatabaseCommand = new RelayCommand(ExecuteAddDatabase);
-            Messenger.Instance.DatabaseAdded += OnDatabaseAdded;
+
+            Messenger.Instance.StringValueChanged += OnStringValueChanged;
+
+            // This makes sure that our list of containers is updated every second
             Timer containerUpdateTimer = new Timer(1000);
             containerUpdateTimer.Elapsed += async (sender, e) => await Task.Run(FetchDockerbaseContainers);
             containerUpdateTimer.AutoReset = true;
             containerUpdateTimer.Enabled = true;
         }
 
-        //Methods
-        private void OnDatabaseAdded(object sender, string databaseName)
+        // Methods
+        private void OnStringValueChanged(object sender, Messenger.StringEventArgs e)
         {
-            Items.Add(databaseName);
+            if (e.Key == "Username")
+            {
+                LoggedInUsername = e.Value;
+            }
+            if (e.Key == "ContainerName")
+            {
+                Items.Add(e.Value);
+            }
         }
 
         private void ExecuteAddDatabase(object obj)
@@ -44,32 +54,26 @@ namespace DockerbaseWPF.ViewModels
             ContentView = new AddDatabase();
         }
 
-        //This method is used make sure that we are displaying the Dockerbase containers in the menu ScrollViewer when the application is first launched
         private async Task FetchDockerbaseContainers()
         {
             var containers = await DockerViewModel.GetDockerbaseContainersAsync();
+
+            // We need to use the dispatcher to update the UI as we are on a background thread
             Application.Current.Dispatcher.Invoke(() =>
             {
-                // Clear the current list of Items
                 Items.Clear();
-
-                // Add the containers to the Items collection
                 foreach (var container in containers)
                 {
                     Items.Add(container.Names.First().Substring(1));
                 }
             });
         }
-
-
-        //lets open the ContentView and pass the name of the container that is in focus so that all the information about that container can be displayed
         private void CurrentContainerInFocus(string name)
         {
             throw new NotImplementedException();
         }
 
-
-        //Getters and Setters
+        // Getters and Setters
         public UserControl ContentView
         {
             get => _contentView;
@@ -87,6 +91,15 @@ namespace DockerbaseWPF.ViewModels
             {
                 _items = value;
                 OnPropertyChanged(nameof(Items));
+            }
+        }
+
+        public string LoggedInUsername 
+        { get => _loggedInUsername;
+          set
+            {
+                _loggedInUsername = value;
+                OnPropertyChanged(nameof(LoggedInUsername));
             }
         }
     }

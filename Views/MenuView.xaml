@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:DockerbaseWPF.Views"
         xmlns:viewModels="clr-namespace:DockerbaseWPF.ViewModels"
         mc:Ignorable="d"
         Title="MenuView" Height="800" Width="1200" ResizeMode="CanMinimize">
@@ -11,12 +10,25 @@
         <viewModels:MenuViewModel/>
     </Window.DataContext>
     <Grid Background="#FFFFF4DF">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="13*"/>
+            <RowDefinition Height="43*"/>
+        </Grid.RowDefinitions>
+        <DockPanel LastChildFill="False" Margin="250,0,0,108">
+            <TextBlock Height="38" Margin="20,0,0,0" TextWrapping="Wrap" Text="Dashboard" Width="126" FontWeight="Bold" Foreground="#FF353535" FontSize="24" HorizontalAlignment="Left"/>
+        </DockPanel>
         <ContentControl Content="{Binding ContentView}" 
                         HorizontalAlignment="Left" 
                         Height="710" Margin="250,74,0,0" 
                         VerticalAlignment="Top"
-                        Width="950"/>
-        <DockPanel LastChildFill="False" Margin="0,250,950,0" Width="250" Height="534" Background="#FFE1995F">
+                        Width="950" Grid.RowSpan="2"/>
+        <DockPanel LastChildFill="False" Margin="0,0,950,459" Width="250" Background="#FFE8AB79" Grid.RowSpan="2">
+            <Border  Width="150" Height="150" Margin="0,20,0,0" DockPanel.Dock="Top" VerticalAlignment="Top" HorizontalAlignment="Center" CornerRadius="100" Background="#FFE6E6E6" ClipToBounds="True">
+                <Image Stretch="UniformToFill"/>
+            </Border>
+            <TextBlock TextWrapping="Wrap" Text="{Binding LoggedInUsername}" Width="142" Height="25" DockPanel.Dock="Top" TextAlignment="Center" FontSize="16" Foreground="White" Margin="0,25,0,0"/>
+        </DockPanel>
+        <DockPanel LastChildFill="False" Margin="0,68,950,0" Width="250" Height="534" Background="#FFE1995F" Grid.Row="1">
             <ScrollViewer Width="250">
                 <StackPanel>
                     <Button Content="ADD DATABASE" 
