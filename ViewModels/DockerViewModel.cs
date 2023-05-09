@@ -2,6 +2,7 @@
 using DockerbaseWPF.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -44,7 +45,9 @@ namespace DockerbaseWPF.ViewModels
                 Name = name,
                 Labels = new Dictionary<string, string>
                 {
-                    {"mysql", "Dockerbase"}
+                    {"mysql", "Dockerbase"},
+                    {"password", password}
+
                 },
                 Env = new List<string> { "MYSQL_ROOT_PASSWORD=" + password },
                 HostConfig = new HostConfig
@@ -61,6 +64,31 @@ namespace DockerbaseWPF.ViewModels
             // Start the container
             await _model.dockerClient.Containers.StartContainerAsync(container.ID, new ContainerStartParameters());
             return container;
+        }
+
+        public async Task<ContainerModel> GetContainerByNameAsync(string containerName)
+        {
+            // Fetch the list of containers
+            var containers = await GetDockerbaseContainersAsync();
+
+            // Find the container with the given name
+            var container = containers.FirstOrDefault(c => c.Names.Any(n => n.Substring(1) == containerName));
+
+            if (container != null)
+            {
+                // Map the Docker.DotNet container object to your Container class
+                return new ContainerModel(
+                    containerName,
+                    container.Image,
+                    container.Status,
+                    container.Ports.First<Port>().PublicPort.ToString(),
+                    container.Created.ToString(),
+                    container.SizeRootFs.ToString(),
+                    container.Labels["password"]
+                );
+            }
+
+            return null;
         }
 
         public async Task<IEnumerable<ContainerListResponse>> GetDockerbaseContainersAsync()

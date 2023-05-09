@@ -44,8 +44,8 @@ namespace DockerbaseWPF.ViewModels
             Container = obj as string;
             if (Container != null)
             {
-                ContentView = new ContentView();
                 Messenger.Instance.Send("ContainerName", Container);
+                ContentView = new ContentView();
             }
         }
         private void OnStringValueChanged(object sender, Messenger.StringEventArgs e)
