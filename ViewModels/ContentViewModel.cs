@@ -33,27 +33,56 @@ namespace DockerbaseWPF.ViewModels
         }
         private async Task SetFocusedContainerAsync()
         {
-            Task.Delay(5000);
             _container = await GetContainerByNameAsync(_focusedContainer);
             PopulateDataGrid();
         }
-        private void PopulateDataGrid()
+        private async void PopulateDataGrid()
         {
+            if (_container == null)
+                return;
+
             var connectionString = $"server=127.0.0.1;port={_container.Port};user=root;password={_container.Password};";
-            using (MySqlConnection connection = new MySqlConnection(connectionString))
+
+            bool connected = false;
+            int retries = 0;
+
+            while (!connected && retries < 5)
             {
-                connection.Open();
-                using (MySqlCommand command = new MySqlCommand("SELECT * FROM userDB.users;", connection))
+                try
                 {
-                    using (MySqlDataAdapter adapter = new MySqlDataAdapter(command))
+                    using (MySqlConnection connection = new MySqlConnection(connectionString))
                     {
-                        DataTable table = new DataTable();
-                        adapter.Fill(table);
-                        _mainDataGridContent = table.DefaultView;
+                        await connection.OpenAsync();
+                        using (MySqlCommand command = new MySqlCommand("SELECT * FROM userDB.users;", connection))
+                        {
+                            using (MySqlDataAdapter adapter = new MySqlDataAdapter(command))
+                            {
+                                DataTable table = new DataTable();
+                                await Task.Run(() => adapter.Fill(table));
+                                _mainDataGridContent = table.DefaultView;
+                            }
+                        }
+
+                        connected = true;
+                    }
+                }
+                catch (MySqlException ex)
+                {
+                    // If it's a connection issue, wait for a bit and then retry.
+                    if (ex.Number == 1042 || ex.Number == 0)
+                    {
+                        retries++;
+                        await Task.Delay(1000);
+                    }
+                    else
+                    {
+                        // If it's another issue, rethrow the exception.
+                        throw;
                     }
                 }
             }
         }
+
         public async Task<ContainerModel> GetContainerByNameAsync(string containerName)
         {
             // Fetch the list of containers

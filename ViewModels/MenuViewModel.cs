@@ -52,8 +52,7 @@ namespace DockerbaseWPF.ViewModels
                 // Await the initialization of the ContentViewModel
                 await contentViewModel.InitializeAsync();
 
-                // Assuming ContentView is a view that uses ContentViewModel as its DataContext,
-                // you should set the DataContext to the new instance of ContentViewModel.
+
                 ContentView contentView = new ContentView();
                 contentView.DataContext = contentViewModel;
 
