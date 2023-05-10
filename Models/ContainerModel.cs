@@ -12,7 +12,7 @@ namespace DockerbaseWPF.Models
         public string Name { get; set; }
         public string Image { get; set; }
         public string Status { get; set; }
-        public string Ports { get; set; }
+        public string Port { get; set; }
         public string Created { get; set; }
         public string Size { get; set; }
         public string Password { get; set; }
@@ -22,7 +22,7 @@ namespace DockerbaseWPF.Models
             Name = name;
             Image = image;
             Status = status;
-            Ports = ports;
+            Port = ports;
             Created = created;
             Size = size;
             this.Password = password;

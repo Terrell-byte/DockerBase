@@ -1,8 +1,10 @@
 ﻿using Docker.DotNet;
 using Docker.DotNet.Models;
 using DockerbaseWPF.Views;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -102,8 +104,8 @@ namespace DockerbaseWPF.Models
                     {"ID", container.ID},
                     {"Image", container.Image},
                     {"Status", container.Status},
-                    {"State", container.State},
                     {"Created", container.Created.ToString()},
+                    {"State", container.State},
                     {"Ports", string.Join(", ", container.Ports.Select(p => $"{p.PrivatePort}:{p.PublicPort}"))},
                     {"Labels", string.Join(", ", container.Labels.Select(l => $"{l.Key}={l.Value}"))}
                 };
@@ -112,5 +114,25 @@ namespace DockerbaseWPF.Models
             }
             return containerInfoList;
         }
+        //public MySqlCommand? ConnectToDatabase(ContainerModel container, string query)
+        //{
+        //    var connectionString = $"server=localhost;port={container.Port};user=root;password={container.Password};";
+        //    using (MySqlConnection connection = new MySqlConnection(connectionString))
+        //    {
+        //        try
+        //        {
+        //            connection.Open();
+        //            using (MySqlCommand command = new MySqlCommand(query, connection))
+        //            {
+        //                return command;
+        //            }
+        //        }
+        //        catch (MySqlException e)
+        //        {
+        //            System.Windows.MessageBox.Show(e.Message);
+        //            return null;
+        //        }
+        //    }
+        //}
     }
 }

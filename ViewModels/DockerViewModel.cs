@@ -14,10 +14,8 @@ namespace DockerbaseWPF.ViewModels
     public class DockerViewModel : ViewModelBase
     {
         private DockerModel _model = new DockerModel();
-        private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
 
         public IEnumerable<object> DockerContainers { get; internal set; }
-
 
         public async Task<CreateContainerResponse> CreateDockerContainerAsync(string name, string password, string template, string type)
         {
@@ -66,30 +64,7 @@ namespace DockerbaseWPF.ViewModels
             return container;
         }
 
-        public async Task<ContainerModel> GetContainerByNameAsync(string containerName)
-        {
-            // Fetch the list of containers
-            var containers = await GetDockerbaseContainersAsync();
 
-            // Find the container with the given name
-            var container = containers.FirstOrDefault(c => c.Names.Any(n => n.Substring(1) == containerName));
-
-            if (container != null)
-            {
-                // Map the Docker.DotNet container object to your Container class
-                return new ContainerModel(
-                    containerName,
-                    container.Image,
-                    container.Status,
-                    container.Ports.First<Port>().PublicPort.ToString(),
-                    container.Created.ToString(),
-                    container.SizeRootFs.ToString(),
-                    container.Labels["password"]
-                );
-            }
-
-            return null;
-        }
 
         public async Task<IEnumerable<ContainerListResponse>> GetDockerbaseContainersAsync()
         {

@@ -39,15 +39,29 @@ namespace DockerbaseWPF.ViewModels
         }
 
         // Methods
-        private void ExecuteCurrentContainerInFocus(object obj)
+        private async void ExecuteCurrentContainerInFocus(object obj)
         {
             Container = obj as string;
             if (Container != null)
             {
                 Messenger.Instance.Send("ContainerName", Container);
-                ContentView = new ContentView();
+
+                // Pass the focused container to the ContentViewModel
+                ContentViewModel contentViewModel = new ContentViewModel(Container);
+
+                // Await the initialization of the ContentViewModel
+                await contentViewModel.InitializeAsync();
+
+                // Assuming ContentView is a view that uses ContentViewModel as its DataContext,
+                // you should set the DataContext to the new instance of ContentViewModel.
+                ContentView contentView = new ContentView();
+                contentView.DataContext = contentViewModel;
+
+                ContentView = contentView;
             }
         }
+
+
         private void OnStringValueChanged(object sender, Messenger.StringEventArgs e)
         {
             if (e.Key == "Username")
