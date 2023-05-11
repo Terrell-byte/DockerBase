@@ -38,11 +38,7 @@ namespace DockerbaseWPF.ViewModels
         }
         private async void PopulateDataGrid()
         {
-            if (_container == null)
-                return;
-
             var connectionString = $"server=127.0.0.1;port={_container.Port};user=root;password={_container.Password};";
-
             bool connected = false;
             int retries = 0;
 
