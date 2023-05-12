@@ -28,8 +28,6 @@ namespace DockerbaseWPF.ViewModels
 
 
         //Methods
-
-        // ALL OF THIS CODE NEEDS TO BE REFAORED AND CLEAN UP!!!!!
         public async Task InitializeAsync()
         {
             await SetFocusedContainerAsync();
