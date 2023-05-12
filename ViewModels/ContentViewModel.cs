@@ -31,8 +31,6 @@ namespace DockerbaseWPF.ViewModels
         public async Task InitializeAsync()
         {
             await SetFocusedContainerAsync();
-            await PopulateDataGrid();
-            await PopulateNewEntiesGrid();
         }
         private async Task SetFocusedContainerAsync()
         {
@@ -43,7 +41,7 @@ namespace DockerbaseWPF.ViewModels
 
         private async Task PopulateNewEntiesGrid()
         {
-            var quary = "SELECT id, date_added FROM userDB.users;";
+            var quary = "SELECT id, date_added FROM userDB.users ORDER BY date_added DESC LIMIT 5;";
             var connectionString = BuildConnectionString();
 
             for (int retries = 0; retries < 5; retries++)
