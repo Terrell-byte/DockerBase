@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace DockerbaseWPF.ViewModels
 {
@@ -16,6 +17,7 @@ namespace DockerbaseWPF.ViewModels
         private DockerViewModel _dockerViewModel;
         private ContainerModel _container;
         private DataView _mainDataGridContent;
+        private DataView _newEntriesDataGridContent;
 
         //Constructor
         public ContentViewModel(string focusedContainer)
@@ -26,58 +28,91 @@ namespace DockerbaseWPF.ViewModels
 
 
         //Methods
+
+        // ALL OF THIS CODE NEEDS TO BE REFAORED AND CLEAN UP!!!!!
         public async Task InitializeAsync()
         {
             await SetFocusedContainerAsync();
-            PopulateDataGrid();
+            await PopulateDataGrid();
+            await PopulateNewEntiesGrid();
         }
         private async Task SetFocusedContainerAsync()
         {
             _container = await GetContainerByNameAsync(_focusedContainer);
-            PopulateDataGrid();
+            await PopulateDataGrid();
+            await PopulateNewEntiesGrid();
         }
-        private async void PopulateDataGrid()
-        {
-            var connectionString = $"server=127.0.0.1;port={_container.Port};user=root;password={_container.Password};";
-            bool connected = false;
-            int retries = 0;
 
-            while (!connected && retries < 5)
+        private async Task PopulateNewEntiesGrid()
+        {
+            var quary = "SELECT id, date_added FROM userDB.users;";
+            var connectionString = BuildConnectionString();
+
+            for (int retries = 0; retries < 5; retries++)
             {
                 try
                 {
-                    using (MySqlConnection connection = new MySqlConnection(connectionString))
-                    {
-                        await connection.OpenAsync();
-                        using (MySqlCommand command = new MySqlCommand("SELECT * FROM userDB.users;", connection))
-                        {
-                            using (MySqlDataAdapter adapter = new MySqlDataAdapter(command))
-                            {
-                                DataTable table = new DataTable();
-                                await Task.Run(() => adapter.Fill(table));
-                                _mainDataGridContent = table.DefaultView;
-                            }
-                        }
+                    await FetchDataFromDatabase(connectionString, quary);
+                    _newEntriesDataGridContent = await FetchDataFromDatabase(connectionString, quary);
 
-                        connected = true;
-                    }
+                    break;
                 }
-                catch (MySqlException ex)
+                catch (MySqlException ex) when (ex.Number == 1042 || ex.Number == 0)
                 {
                     // If it's a connection issue, wait for a bit and then retry.
-                    if (ex.Number == 1042 || ex.Number == 0)
-                    {
-                        retries++;
-                        await Task.Delay(1000);
-                    }
-                    else
-                    {
-                        // If it's another issue, rethrow the exception.
-                        throw;
-                    }
+                    await Task.Delay(1000);
                 }
             }
         }
+        private async Task PopulateDataGrid()
+        {
+            var quary = "SELECT * FROM userDB.users;";
+            var connectionString = BuildConnectionString();
+
+            for (int retries = 0; retries < 5; retries++)
+            {
+                try
+                {
+                    await FetchDataFromDatabase(connectionString, quary);
+                    _mainDataGridContent = await FetchDataFromDatabase(connectionString, quary);
+                    break;
+                }
+                catch (MySqlException ex) when (ex.Number == 1042 || ex.Number == 0)
+                {
+                    // If it's a connection issue, wait for a bit and then retry.
+                    await Task.Delay(1000);
+                }
+            }
+        }
+
+        private string BuildConnectionString()
+        {
+            return $"server=127.0.0.1;port={_container.Port};user=root;password={_container.Password};";
+        }
+
+        private async Task<DataView> FetchDataFromDatabase(string connectionString, string quary)
+        {
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                await connection.OpenAsync();
+                var table = await FetchTableData(connection, quary);
+                return table.DefaultView;
+            }
+        }
+
+        private async Task<DataTable> FetchTableData(MySqlConnection connection, string quary)
+        {
+            using (MySqlCommand command = new MySqlCommand(quary, connection))
+            {
+                using (MySqlDataAdapter adapter = new MySqlDataAdapter(command))
+                {
+                    var table = new DataTable();
+                    await Task.Run(() => adapter.Fill(table));
+                    return table;
+                }
+            }
+        }
+
 
         public async Task<ContainerModel> GetContainerByNameAsync(string containerName)
         {
@@ -122,6 +157,16 @@ namespace DockerbaseWPF.ViewModels
                 if (Equals(value, _mainDataGridContent)) return;
                 _mainDataGridContent = value;
                 OnPropertyChanged(nameof(MainDataGridContent));
+            }
+        }
+        public DataView NewEntriesDataGridContent
+        {
+            get { return _newEntriesDataGridContent; }
+            set
+            {
+                if (Equals(value, _newEntriesDataGridContent)) return;
+                _newEntriesDataGridContent = value;
+                OnPropertyChanged(nameof(NewEntriesDataGridContent));
             }
         }
     }
