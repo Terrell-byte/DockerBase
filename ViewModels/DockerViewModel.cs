@@ -78,6 +78,10 @@ namespace DockerbaseWPF.ViewModels
         {
             await _model.dockerClient.Containers.StopContainerAsync(containerId, new ContainerStopParameters());
         }
+        public async Task StartDockerContainerAsync(string containerId)
+        {
+            await _model.dockerClient.Containers.StartContainerAsync(containerId, new ContainerStartParameters());
+        }
 
         public async Task DeleteDockerContainerAsync(string containerId)
         {

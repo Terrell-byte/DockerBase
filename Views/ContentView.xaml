@@ -48,14 +48,16 @@
                    FontSize="24"
                    HorizontalAlignment="Left"/>
 
-        <TextBox HorizontalAlignment="Left"
+        <TextBox Text="{Binding Username}"
+                 HorizontalAlignment="Left"
                  Height="21"
                  Margin="49,101,0,0"
                  TextWrapping="Wrap"
                  VerticalAlignment="Top"
                  Width="189"/>
 
-        <TextBox HorizontalAlignment="Left"
+        <TextBox Text="{Binding Password}"
+                 HorizontalAlignment="Left"
                  Height="20"
                  Margin="49,175,0,0"
                  TextWrapping="Wrap"
@@ -82,7 +84,8 @@
                 HorizontalAlignment="Left"
                 Height="33" Margin="49,272,0,0"
                 VerticalAlignment="Top"
-                Width="120"/>
+                Width="120"
+                Command="{Binding InsertIntoDatabase}"/>
 
         <TextBlock Text="{Binding EntryCount}"
                    Margin="510,65,0,603"

@@ -1,6 +1,7 @@
 ﻿using Docker.DotNet.Models;
 using DockerbaseWPF.Models;
 using MySql.Data.MySqlClient;
+using Org.BouncyCastle.Bcpg.OpenPgp;
 using System;
 using System.Data;
 using System.Linq;
@@ -22,9 +23,14 @@ namespace DockerbaseWPF.ViewModels
         private string _entryCount;
         private DockerViewModel docker = new DockerViewModel();
         private bool _isViewVisible = true;
+        private string _containerState = "Stop";
+        private string _username;
+        private string _password;
 
         //ICommands
         public ICommand DeleteContainer { get; }
+        public ICommand SetContainerState { get; }
+        public ICommand InsertIntoDatabase { get; }
 
         //Constructor
         public ContentViewModel(string focusedContainer)
@@ -32,6 +38,7 @@ namespace DockerbaseWPF.ViewModels
             _focusedContainer = focusedContainer;
             _dockerViewModel = new DockerViewModel();
             DeleteContainer = new RelayCommand(ExecuteDeleteContainer);
+            InsertIntoDatabase = new RelayCommand(ExecuteInsertIntoDatabase);
         }
 
 
@@ -58,6 +65,12 @@ namespace DockerbaseWPF.ViewModels
             await docker.DeleteDockerContainerAsync(_container.Id);
         }
 
+        private async void ExecuteInsertIntoDatabase(object obj)
+        {
+            var query = $"INSERT INTO userDB.users (username, password) VALUES ('{Username}', '{Password}');";
+            var connectionString = BuildConnectionString();
+            await ExecuteNonQuery(connectionString, query);
+        }
 
         private async Task GetEntryCount()
         {
@@ -65,6 +78,24 @@ namespace DockerbaseWPF.ViewModels
             var query = "SELECT COUNT(*) FROM userDB.users;";
             var connectionString = BuildConnectionString();
             EntryCount = (await FetchScalarFromDatabase(connectionString, query)).ToString();
+        }
+        private async Task ExecuteNonQuery(string connectionString, string query)
+        {
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    await connection.OpenAsync();
+                    using (MySqlCommand command = new MySqlCommand(query, connection))
+                    {
+                        await command.ExecuteNonQueryAsync();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private async Task<int> FetchScalarFromDatabase(string connectionString, string query)
@@ -232,5 +263,33 @@ namespace DockerbaseWPF.ViewModels
                 OnPropertyChanged(nameof(IsViewVisible));
             }
         }
+        public string ContainerState
+        {
+            get => _containerState;
+            set
+            {
+                _containerState = value;
+                OnPropertyChanged(nameof(ContainerState));
+            }
+        }
+        public string Username
+        {
+            get => _username;
+            set
+            {
+                _username = value;
+                OnPropertyChanged(nameof(Username));
+            }
+        }
+        public string Password
+        {
+            get => _password;
+            set
+            {
+                _password = value;
+                OnPropertyChanged(nameof(Password));
+            }
+        }
+
     }
 }
