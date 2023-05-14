@@ -18,6 +18,7 @@ namespace DockerbaseWPF.ViewModels
         private ContainerModel _container;
         private DataView _mainDataGridContent;
         private DataView _newEntriesDataGridContent;
+        private string _entryCount;
 
         //Constructor
         public ContentViewModel(string focusedContainer)
@@ -37,7 +38,32 @@ namespace DockerbaseWPF.ViewModels
             _container = await GetContainerByNameAsync(_focusedContainer);
             await PopulateDataGrid();
             await PopulateNewEntiesGrid();
+            await GetEntryCount();
+
         }
+        private async Task GetEntryCount()
+        {
+            //lets connect to the database and then run a query to get the count of entries in the table
+            var query = "SELECT COUNT(*) FROM userDB.users;";
+            var connectionString = BuildConnectionString();
+            EntryCount = (await FetchScalarFromDatabase(connectionString, query)).ToString();
+        }
+
+
+        private async Task<int> FetchScalarFromDatabase(string connectionString, string query)
+        {
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                await connection.OpenAsync();
+                using (MySqlCommand command = new MySqlCommand(query, connection))
+                {
+                    var result = await command.ExecuteScalarAsync();
+                    return Convert.ToInt32(result);
+                }
+            }
+        }
+
+
 
         private async Task PopulateNewEntiesGrid()
         {
@@ -49,7 +75,7 @@ namespace DockerbaseWPF.ViewModels
                 try
                 {
                     await FetchDataFromDatabase(connectionString, quary);
-                    _newEntriesDataGridContent = await FetchDataFromDatabase(connectionString, quary);
+                    _newEntriesDataGridContent = (DataView)await FetchDataFromDatabase(connectionString, quary);
 
                     break;
                 }
@@ -70,7 +96,7 @@ namespace DockerbaseWPF.ViewModels
                 try
                 {
                     await FetchDataFromDatabase(connectionString, quary);
-                    _mainDataGridContent = await FetchDataFromDatabase(connectionString, quary);
+                    _mainDataGridContent = (DataView)await FetchDataFromDatabase(connectionString, quary);
                     break;
                 }
                 catch (MySqlException ex) when (ex.Number == 1042 || ex.Number == 0)
@@ -86,28 +112,27 @@ namespace DockerbaseWPF.ViewModels
             return $"server=127.0.0.1;port={_container.Port};user=root;password={_container.Password};";
         }
 
-        private async Task<DataView> FetchDataFromDatabase(string connectionString, string quary)
+private async Task<object> FetchDataFromDatabase(string connectionString, string query)
+{
+    using (MySqlConnection connection = new MySqlConnection(connectionString))
+    {
+        await connection.OpenAsync();
+        using (MySqlCommand command = new MySqlCommand(query, connection))
         {
-            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            if (query.Trim().StartsWith("SELECT", StringComparison.OrdinalIgnoreCase))
             {
-                await connection.OpenAsync();
-                var table = await FetchTableData(connection, quary);
+                var adapter = new MySqlDataAdapter(command);
+                var table = new DataTable();
+                adapter.Fill(table);
                 return table.DefaultView;
             }
-        }
-
-        private async Task<DataTable> FetchTableData(MySqlConnection connection, string quary)
-        {
-            using (MySqlCommand command = new MySqlCommand(quary, connection))
+            else
             {
-                using (MySqlDataAdapter adapter = new MySqlDataAdapter(command))
-                {
-                    var table = new DataTable();
-                    await Task.Run(() => adapter.Fill(table));
-                    return table;
-                }
+                return await command.ExecuteScalarAsync();
             }
         }
+    }
+}
 
 
         public async Task<ContainerModel> GetContainerByNameAsync(string containerName)
@@ -163,6 +188,16 @@ namespace DockerbaseWPF.ViewModels
                 if (Equals(value, _newEntriesDataGridContent)) return;
                 _newEntriesDataGridContent = value;
                 OnPropertyChanged(nameof(NewEntriesDataGridContent));
+            }
+        }
+        public string EntryCount
+        {
+            get { return _entryCount; }
+            set
+            {
+                if (value == _entryCount) return;
+                _entryCount = value;
+                OnPropertyChanged(nameof(EntryCount));
             }
         }
     }
