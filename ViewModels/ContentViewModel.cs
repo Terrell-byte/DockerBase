@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace DockerbaseWPF.ViewModels
 {
@@ -19,12 +20,18 @@ namespace DockerbaseWPF.ViewModels
         private DataView _mainDataGridContent;
         private DataView _newEntriesDataGridContent;
         private string _entryCount;
+        private DockerViewModel docker = new DockerViewModel();
+        private bool _isViewVisible = true;
+
+        //ICommands
+        public ICommand DeleteContainer { get; }
 
         //Constructor
         public ContentViewModel(string focusedContainer)
         {
             _focusedContainer = focusedContainer;
             _dockerViewModel = new DockerViewModel();
+            DeleteContainer = new RelayCommand(ExecuteDeleteContainer);
         }
 
 
@@ -41,6 +48,17 @@ namespace DockerbaseWPF.ViewModels
             await GetEntryCount();
 
         }
+        private async void ExecuteDeleteContainer(object obj)
+        {
+            MessageBoxResult result = MessageBox.Show("Deleting Container...", "Please Wait", MessageBoxButton.OK);
+            if (result == MessageBoxResult.OK)
+            {
+                IsViewVisible = false;
+            }
+            await docker.DeleteDockerContainerAsync(_container.Id);
+        }
+
+
         private async Task GetEntryCount()
         {
             //lets connect to the database and then run a query to get the count of entries in the table
@@ -49,21 +67,25 @@ namespace DockerbaseWPF.ViewModels
             EntryCount = (await FetchScalarFromDatabase(connectionString, query)).ToString();
         }
 
-
         private async Task<int> FetchScalarFromDatabase(string connectionString, string query)
         {
-            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            try
             {
-                await connection.OpenAsync();
-                using (MySqlCommand command = new MySqlCommand(query, connection))
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
-                    var result = await command.ExecuteScalarAsync();
-                    return Convert.ToInt32(result);
+                    await connection.OpenAsync();
+                    using (MySqlCommand command = new MySqlCommand(query, connection))
+                    {
+                        return Convert.ToInt32(await command.ExecuteScalarAsync());
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return 0;
+            }
         }
-
-
 
         private async Task PopulateNewEntiesGrid()
         {
@@ -112,27 +134,27 @@ namespace DockerbaseWPF.ViewModels
             return $"server=127.0.0.1;port={_container.Port};user=root;password={_container.Password};";
         }
 
-private async Task<object> FetchDataFromDatabase(string connectionString, string query)
-{
-    using (MySqlConnection connection = new MySqlConnection(connectionString))
-    {
-        await connection.OpenAsync();
-        using (MySqlCommand command = new MySqlCommand(query, connection))
+        private async Task<object> FetchDataFromDatabase(string connectionString, string query)
         {
-            if (query.Trim().StartsWith("SELECT", StringComparison.OrdinalIgnoreCase))
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
-                var adapter = new MySqlDataAdapter(command);
-                var table = new DataTable();
-                adapter.Fill(table);
-                return table.DefaultView;
-            }
-            else
-            {
-                return await command.ExecuteScalarAsync();
+                await connection.OpenAsync();
+                using (MySqlCommand command = new MySqlCommand(query, connection))
+                {
+                    if (query.Trim().StartsWith("SELECT", StringComparison.OrdinalIgnoreCase))
+                    {
+                        var adapter = new MySqlDataAdapter(command);
+                        var table = new DataTable();
+                        adapter.Fill(table);
+                        return table.DefaultView;
+                    }
+                    else
+                    {
+                        return await command.ExecuteScalarAsync();
+                    }
+                }
             }
         }
-    }
-}
 
 
         public async Task<ContainerModel> GetContainerByNameAsync(string containerName)
@@ -153,7 +175,8 @@ private async Task<object> FetchDataFromDatabase(string connectionString, string
                     container.Ports.First<Port>().PublicPort.ToString(),
                     container.Created.ToString(),
                     container.SizeRootFs.ToString(),
-                    container.Labels["password"]
+                    container.Labels["password"],
+                    container.ID
                 );
             }
 
@@ -198,6 +221,15 @@ private async Task<object> FetchDataFromDatabase(string connectionString, string
                 if (value == _entryCount) return;
                 _entryCount = value;
                 OnPropertyChanged(nameof(EntryCount));
+            }
+        }
+        public bool IsViewVisible
+        {
+            get => _isViewVisible;
+            set
+            {
+                _isViewVisible = value;
+                OnPropertyChanged(nameof(IsViewVisible));
             }
         }
     }

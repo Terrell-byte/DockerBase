@@ -7,7 +7,13 @@
              xmlns:viewModel="clr-namespace:DockerbaseWPF.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="700" d:DesignWidth="930" Foreground="{x:Null}" Background="#FFFFF4DF">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisibility"/>
+    </UserControl.Resources>
 
+    <UserControl.Visibility>
+        <Binding Path="IsViewVisible" Mode="TwoWay" Converter="{StaticResource BoolToVisibility}"/>
+    </UserControl.Visibility>
     <Grid>
         <Rectangle HorizontalAlignment="Left" Height="329" Margin="25,350,0,0" VerticalAlignment="Top" Width="292" Fill="White"/>
         <Rectangle HorizontalAlignment="Left" Height="329" Margin="346,350,0,0" VerticalAlignment="Top" Width="554" Fill="White"/>
@@ -15,28 +21,69 @@
         <Rectangle HorizontalAlignment="Left" Height="307" Margin="487,16,0,0" VerticalAlignment="Top" Width="254" Fill="White"/>
         <Rectangle HorizontalAlignment="Left" Height="142" Margin="761,181,0,0" VerticalAlignment="Top" Width="149" Fill="White"/>
         <Rectangle HorizontalAlignment="Left" Height="142" Margin="761,16,0,0" VerticalAlignment="Top" Width="149" Fill="White"/>
-        <DockPanel LastChildFill="False"/>
+
         <DataGrid ItemsSource="{Binding MainDataGridContent}" 
                   AutoGenerateColumns="True" 
                   HorizontalAlignment="Left" 
-                  Height="314" Width="534"
-                  Margin="356,358,0,0" 
+                  Height="307" Width="534"
+                  Margin="356,365,0,0" 
                   VerticalAlignment="Top" 
                   ColumnWidth="*"/>
 
         <DataGrid ItemsSource="{Binding NewEntriesDataGridContent}" 
                   AutoGenerateColumns="True" 
                   HorizontalAlignment="Left" 
-                  Height="314" Width="263"
+                  Height="307" Width="263"
                   Margin="39,365,0,0" 
                   VerticalAlignment="Top" 
                   ColumnWidth="*"/>
-        <TextBlock Height="38" Margin="39,27,0,635" TextWrapping="Wrap" Text="Insert Into Database" Width="278" FontWeight="Bold" Foreground="#FF353535" FontSize="24" HorizontalAlignment="Left"/>
-        <TextBox HorizontalAlignment="Left" Height="21" Margin="49,101,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="189"/>
-        <TextBox HorizontalAlignment="Left" Height="20" Margin="49,175,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="189"/>
-        <TextBlock Margin="49,157,0,525" TextWrapping="Wrap" Text="Password" Width="61" Foreground="#FF353535" HorizontalAlignment="Left" FontWeight="Bold"/>
-        <TextBlock Margin="49,83,0,599" TextWrapping="Wrap" Text="Username" Width="61" Foreground="#FF353535" HorizontalAlignment="Left" FontWeight="Bold"/>
-        <Button Content="Insert" HorizontalAlignment="Left" Height="33" Margin="49,272,0,0" VerticalAlignment="Top" Width="120"/>
+
+        <TextBlock Height="38"
+                   Margin="39,27,0,635"
+                   TextWrapping="Wrap"
+                   Text="Insert Into Database"
+                   Width="278"
+                   FontWeight="Bold"
+                   Foreground="#FF353535"
+                   FontSize="24"
+                   HorizontalAlignment="Left"/>
+
+        <TextBox HorizontalAlignment="Left"
+                 Height="21"
+                 Margin="49,101,0,0"
+                 TextWrapping="Wrap"
+                 VerticalAlignment="Top"
+                 Width="189"/>
+
+        <TextBox HorizontalAlignment="Left"
+                 Height="20"
+                 Margin="49,175,0,0"
+                 TextWrapping="Wrap"
+                 VerticalAlignment="Top"
+                 Width="189"/>
+
+        <TextBlock Margin="49,157,0,525"
+                   TextWrapping="Wrap"
+                   Text="Password"
+                   Width="61"
+                   Foreground="#FF353535"
+                   HorizontalAlignment="Left"
+                   FontWeight="Bold"/>
+
+        <TextBlock Margin="49,83,0,599"
+                   TextWrapping="Wrap"
+                   Text="Username"
+                   Width="61" 
+                   Foreground="#FF353535" 
+                   HorizontalAlignment="Left"
+                   FontWeight="Bold"/>
+
+        <Button Content="Insert"
+                HorizontalAlignment="Left"
+                Height="33" Margin="49,272,0,0"
+                VerticalAlignment="Top"
+                Width="120"/>
+
         <TextBlock Text="{Binding EntryCount}"
                    Margin="510,65,0,603"
                    TextWrapping="Wrap"
@@ -46,7 +93,30 @@
                    FontSize="24"
                    HorizontalAlignment="Left"
                    TextAlignment="Center"/>
-        <Image HorizontalAlignment="Left" Height="175" Margin="529,122,0,0" VerticalAlignment="Top" Width="175" Source="/Views/bar_chart.png" Stretch="Fill"/>
+
+        <Image HorizontalAlignment="Left"
+               Height="175"
+               Margin="529,122,0,0"
+               VerticalAlignment="Top"
+               Width="175"
+               Source="/Views/bar_chart.png"
+               Stretch="Fill"/>
+
+        <Button Content="DELETE"
+                HorizontalAlignment="Left"
+                Height="115"
+                Margin="778,27,0,0"
+                VerticalAlignment="Top"
+                Width="114"
+                Command="{Binding DeleteContainer}"/>
+
+        <Button Content="{Binding ContainerState}"
+                HorizontalAlignment="Left"
+                Height="116"
+                Margin="778,194,0,0"
+                VerticalAlignment="Top"
+                Width="114"
+                Command="{Binding SetContainerState}"/>
 
 
 
