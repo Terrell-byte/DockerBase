@@ -99,7 +99,7 @@
                Margin="529,122,0,0"
                VerticalAlignment="Top"
                Width="175"
-               Source="/Views/bar_chart.png"
+               Source="/Resources/img/bar_chart.png"
                Stretch="Fill"/>
 
         <Button Content="DELETE"

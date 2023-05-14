@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\img\bar_chart.png" />
     <None Remove="Resources\img\Exit.png" />
     <None Remove="Resources\img\icon _home.png" />
     <None Remove="Resources\img\Login_design-fotor-bg-remover-202305049201.png" />
@@ -27,6 +28,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\img\bar_chart.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Resources\img\Exit.png" />
     <Resource Include="Resources\img\icon _home.png" />
     <Resource Include="Resources\img\Login_design-fotor-bg-remover-202305049201.png" />
