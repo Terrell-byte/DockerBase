@@ -21,11 +21,13 @@ namespace DockerbaseWPF.ViewModels
         private DataView _mainDataGridContent;
         private DataView _newEntriesDataGridContent;
         private string _entryCount;
-        private DockerViewModel docker = new DockerViewModel();
         private bool _isViewVisible = true;
         private string _containerState = "Stop";
         private string _username;
         private string _password;
+        private ContentModel _contentModel = new ContentModel();
+        private DockerViewModel _docker = new DockerViewModel();
+        private DatabaseService _databaseService = new DatabaseService();
 
         //ICommands
         public ICommand DeleteContainer { get; }
@@ -33,10 +35,9 @@ namespace DockerbaseWPF.ViewModels
         public ICommand InsertIntoDatabase { get; }
 
         //Constructor
-        public ContentViewModel(string focusedContainer)
+        public ContentViewModel (string focusedContainer)
         {
             _focusedContainer = focusedContainer;
-            _dockerViewModel = new DockerViewModel();
             DeleteContainer = new RelayCommand(ExecuteDeleteContainer);
             InsertIntoDatabase = new RelayCommand(ExecuteInsertIntoDatabase);
         }
@@ -49,7 +50,7 @@ namespace DockerbaseWPF.ViewModels
         }
         private async Task SetFocusedContainerAsync()
         {
-            _container = await GetContainerByNameAsync(_focusedContainer);
+            _container = await _contentModel.GetContainerByNameAsync(_focusedContainer);
             await PopulateDataGrid();
             await PopulateNewEntiesGrid();
             await GetEntryCount();
@@ -62,14 +63,14 @@ namespace DockerbaseWPF.ViewModels
             {
                 IsViewVisible = false;
             }
-            await docker.DeleteDockerContainerAsync(_container.Id);
+            await _contentModel.DeleteDockerContainerAsync(_container.Id);
         }
 
         private async void ExecuteInsertIntoDatabase(object obj)
         {
             var query = $"INSERT INTO userDB.users (username, password) VALUES ('{Username}', '{Password}');";
             var connectionString = BuildConnectionString();
-            await ExecuteNonQuery(connectionString, query);
+            await _databaseService.ExecuteNonQueryAsync(connectionString, query);
         }
 
         private async Task GetEntryCount()
@@ -77,46 +78,9 @@ namespace DockerbaseWPF.ViewModels
             //lets connect to the database and then run a query to get the count of entries in the table
             var query = "SELECT COUNT(*) FROM userDB.users;";
             var connectionString = BuildConnectionString();
-            EntryCount = (await FetchScalarFromDatabase(connectionString, query)).ToString();
-        }
-        private async Task ExecuteNonQuery(string connectionString, string query)
-        {
-            try
-            {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
-                {
-                    await connection.OpenAsync();
-                    using (MySqlCommand command = new MySqlCommand(query, connection))
-                    {
-                        await command.ExecuteNonQueryAsync();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            EntryCount = (await _databaseService.FetchScalarFromDatabaseAsync(connectionString, query)).ToString();
         }
 
-        private async Task<int> FetchScalarFromDatabase(string connectionString, string query)
-        {
-            try
-            {
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
-                {
-                    await connection.OpenAsync();
-                    using (MySqlCommand command = new MySqlCommand(query, connection))
-                    {
-                        return Convert.ToInt32(await command.ExecuteScalarAsync());
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-                return 0;
-            }
-        }
 
         private async Task PopulateNewEntiesGrid()
         {
@@ -127,8 +91,8 @@ namespace DockerbaseWPF.ViewModels
             {
                 try
                 {
-                    await FetchDataFromDatabase(connectionString, quary);
-                    _newEntriesDataGridContent = (DataView)await FetchDataFromDatabase(connectionString, quary);
+                    await _databaseService.FetchDataFromDatabaseAsync(connectionString, quary);
+                    _newEntriesDataGridContent = (DataView)await _databaseService.FetchDataFromDatabaseAsync(connectionString, quary);
 
                     break;
                 }
@@ -148,8 +112,8 @@ namespace DockerbaseWPF.ViewModels
             {
                 try
                 {
-                    await FetchDataFromDatabase(connectionString, quary);
-                    _mainDataGridContent = (DataView)await FetchDataFromDatabase(connectionString, quary);
+                    await _databaseService.FetchDataFromDatabaseAsync(connectionString, quary);
+                    _mainDataGridContent = (DataView)await _databaseService.FetchDataFromDatabaseAsync(connectionString, quary);
                     break;
                 }
                 catch (MySqlException ex) when (ex.Number == 1042 || ex.Number == 0)
@@ -165,54 +129,7 @@ namespace DockerbaseWPF.ViewModels
             return $"server=127.0.0.1;port={_container.Port};user=root;password={_container.Password};";
         }
 
-        private async Task<object> FetchDataFromDatabase(string connectionString, string query)
-        {
-            using (MySqlConnection connection = new MySqlConnection(connectionString))
-            {
-                await connection.OpenAsync();
-                using (MySqlCommand command = new MySqlCommand(query, connection))
-                {
-                    if (query.Trim().StartsWith("SELECT", StringComparison.OrdinalIgnoreCase))
-                    {
-                        var adapter = new MySqlDataAdapter(command);
-                        var table = new DataTable();
-                        adapter.Fill(table);
-                        return table.DefaultView;
-                    }
-                    else
-                    {
-                        return await command.ExecuteScalarAsync();
-                    }
-                }
-            }
-        }
-
-
-        public async Task<ContainerModel> GetContainerByNameAsync(string containerName)
-        {
-            // Fetch the list of containers
-            var containers = await _dockerViewModel.GetDockerbaseContainersAsync();
-
-            // Find the container with the given name
-            var container = containers.FirstOrDefault(c => c.Names.Any(n => n.Substring(1) == containerName));
-
-            if (container != null)
-            {
-                // Map the Docker.DotNet container object to your Container class
-                return new ContainerModel(
-                    containerName,
-                    container.Image,
-                    container.Status,
-                    container.Ports.First<Port>().PublicPort.ToString(),
-                    container.Created.ToString(),
-                    container.SizeRootFs.ToString(),
-                    container.Labels["password"],
-                    container.ID
-                );
-            }
-
-            return null;
-        }
+    
         //Getters and Setters
         public string FocusedContainer
         {

@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using DockerbaseWPF.Views;
 using System.Windows;
+using DockerbaseWPF.Models;
 
 namespace DockerbaseWPF.ViewModels
 {

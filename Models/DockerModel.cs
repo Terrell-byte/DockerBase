@@ -114,25 +114,5 @@ namespace DockerbaseWPF.Models
             }
             return containerInfoList;
         }
-        //public MySqlCommand? ConnectToDatabase(ContainerModel container, string query)
-        //{
-        //    var connectionString = $"server=localhost;port={container.Port};user=root;password={container.Password};";
-        //    using (MySqlConnection connection = new MySqlConnection(connectionString))
-        //    {
-        //        try
-        //        {
-        //            connection.Open();
-        //            using (MySqlCommand command = new MySqlCommand(query, connection))
-        //            {
-        //                return command;
-        //            }
-        //        }
-        //        catch (MySqlException e)
-        //        {
-        //            System.Windows.MessageBox.Show(e.Message);
-        //            return null;
-        //        }
-        //    }
-        //}
     }
 }
