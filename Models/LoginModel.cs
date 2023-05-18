@@ -4,13 +4,21 @@ using System.Data;
 
 namespace DockerbaseWPF.Models
 {
-    class LoginModel
+    public class LoginModel
     {
         private string connectionString;
 
         public LoginModel()
         {
             connectionString = "server=127.0.0.1;user=root;database=userDB;port=3306;password=rootpassword;";
+        }
+
+        internal ViewModels.LoginViewModel LoginViewModel
+        {
+            get => default;
+            set
+            {
+            }
         }
 
         public (string, string) GetUserInfo(string username)
@@ -40,7 +48,6 @@ namespace DockerbaseWPF.Models
             }
             catch (Exception ex)
             {
-                // Log the exception or throw it to the Controller to handle
                 System.Windows.MessageBox.Show(ex.Message);
             }
             finally

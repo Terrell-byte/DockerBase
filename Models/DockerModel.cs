@@ -31,6 +31,14 @@ namespace DockerbaseWPF.Models
             }
         }
 
+        public ViewModels.DockerViewModel DockerViewModel
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
         public async Task CreateMySQLImage()
         {
             var imageCreateParameters = new ImagesCreateParameters

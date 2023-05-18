@@ -46,17 +46,10 @@ namespace DockerbaseWPF.ViewModels
             if (Container != null)
             {
                 Messenger.Instance.Send("ContainerName", Container);
-
-                // Pass the focused container to the ContentViewModel
                 ContentViewModel contentViewModel = new ContentViewModel(Container);
-
-                // Await the initialization of the ContentViewModel
                 await contentViewModel.InitializeAsync();
-
-
                 ContentView contentView = new ContentView();
                 contentView.DataContext = contentViewModel;
-
                 ContentView = contentView;
             }
         }

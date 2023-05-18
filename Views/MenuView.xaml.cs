@@ -23,5 +23,13 @@ namespace DockerbaseWPF.Views
         {
             InitializeComponent();
         }
+
+        public ViewModels.MenuViewModel MenuViewModel
+        {
+            get => default;
+            set
+            {
+            }
+        }
     }
 }

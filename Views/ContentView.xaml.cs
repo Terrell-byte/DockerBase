@@ -24,5 +24,13 @@ namespace DockerbaseWPF.Views
         {
             InitializeComponent();
         }
+
+        public ViewModels.ContentViewModel ContentViewModel
+        {
+            get => default;
+            set
+            {
+            }
+        }
     }
 }

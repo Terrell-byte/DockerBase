@@ -8,13 +8,21 @@ using System.Threading.Tasks;
 
 namespace DockerbaseWPF.Models
 {
-    class ContentModel
+    public class ContentModel
     {
-        private DockerViewModel _dockerViewModel;
+        public DockerViewModel _dockerViewModel;
 
         public ContentModel()
         {
             _dockerViewModel = new DockerViewModel();
+        }
+
+        public ContentViewModel ContentViewModel
+        {
+            get => default;
+            set
+            {
+            }
         }
 
         public async Task<ContainerModel> GetContainerByNameAsync(string containerName)

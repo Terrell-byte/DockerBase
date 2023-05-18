@@ -17,7 +17,15 @@ namespace DockerbaseWPF.Models
         public string Size { get; set; }
         public string Password { get; set; }
         public string Id { get; set; }
-        
+
+        public DatabaseService DatabaseService
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
         public ContainerModel(string name, string image, string status, string ports, string created, string size, string password, string id)
         {
             Name = name;

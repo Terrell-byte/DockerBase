@@ -57,7 +57,6 @@ namespace DockerbaseWPF.ViewModels
 
                 IsViewVisible = false;
 
-                //lets now send our name to the main view so we can display it in the list of containers
                 Messenger.Instance.Send("ContainerName", Name);
             }
             else

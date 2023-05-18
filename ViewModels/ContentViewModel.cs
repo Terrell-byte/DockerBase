@@ -75,7 +75,6 @@ namespace DockerbaseWPF.ViewModels
 
         private async Task GetEntryCount()
         {
-            //lets connect to the database and then run a query to get the count of entries in the table
             var query = "SELECT COUNT(*) FROM userDB.users;";
             var connectionString = BuildConnectionString();
             EntryCount = (await _databaseService.FetchScalarFromDatabaseAsync(connectionString, query)).ToString();
@@ -98,7 +97,6 @@ namespace DockerbaseWPF.ViewModels
                 }
                 catch (MySqlException ex) when (ex.Number == 1042 || ex.Number == 0)
                 {
-                    // If it's a connection issue, wait for a bit and then retry.
                     await Task.Delay(1000);
                 }
             }
@@ -118,7 +116,6 @@ namespace DockerbaseWPF.ViewModels
                 }
                 catch (MySqlException ex) when (ex.Number == 1042 || ex.Number == 0)
                 {
-                    // If it's a connection issue, wait for a bit and then retry.
                     await Task.Delay(1000);
                 }
             }

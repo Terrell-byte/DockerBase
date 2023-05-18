@@ -25,6 +25,14 @@ namespace DockerbaseWPF.Views
             InitializeComponent();
         }
 
+        internal LoginViewModel LoginViewModel
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
         /*
         This method is not true MVVM, as it is a code behind method, but 
         it is the easiest way to get the password from the password box

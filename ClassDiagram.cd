@@ -1,44 +1,56 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="DockerbaseWPF.Models.ContainerModel">
-    <Position X="12.75" Y="0.5" Width="1.5" />
+    <Position X="12.5" Y="2.75" Width="1.5" />
     <Compartments>
       <Compartment Name="Properties" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>AAAAAAAEAAAAgAAABAAAAAQAAAAAABQCAAAAAAAAAAA=</HashCode>
+      <HashCode>AAACAAAEAAAAgAAAgAAAAAQACAAAABQCAAAAAAAAAAA=</HashCode>
       <FileName>Models\ContainerModel.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="DatabaseService" />
+    </ShowAsAssociation>
   </Class>
   <Class Name="DockerbaseWPF.Models.ContentModel">
-    <Position X="14.5" Y="0.75" Width="1.5" />
+    <Position X="14.25" Y="1.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AEAAAAAAAAAAAAAAAAAAAAQAAAAAAAABAAAAAAAEAAA=</HashCode>
       <FileName>Models\ContentModel.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ContentViewModel" />
+    </ShowAsAssociation>
   </Class>
   <Class Name="DockerbaseWPF.Models.DockerModel">
-    <Position X="12.75" Y="2" Width="1.5" />
+    <Position X="10.75" Y="1.25" Width="1.5" />
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAACAAAAAAAAAEAAAAKEAAgAAAAAAAAAABA=</HashCode>
+      <HashCode>AAAAAAAAAAACAAAAAAAgAEAAAAKEAAgAAAAAAAAAABA=</HashCode>
       <FileName>Models\DockerModel.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="DockerViewModel" />
+    </ShowAsAssociation>
   </Class>
   <Class Name="DockerbaseWPF.Models.LoginModel">
-    <Position X="14.5" Y="2" Width="1.5" />
+    <Position X="12.5" Y="1" Width="1.5" />
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAgAAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAgAAAAAAAAAAAAACBAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\LoginModel.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="LoginViewModel" />
+    </ShowAsAssociation>
   </Class>
   <Class Name="DockerbaseWPF.ViewModels.AddDatabaseViewModel">
-    <Position X="5.25" Y="4.5" Width="1.5" />
+    <Position X="5.5" Y="6.75" Width="1.5" />
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
       <Compartment Name="Properties" Collapsed="true" />
@@ -49,29 +61,29 @@
     </TypeIdentifier>
   </Class>
   <Class Name="DockerbaseWPF.ViewModels.ContentViewModel">
-    <Position X="9" Y="4.5" Width="1.5" />
+    <Position X="9" Y="6.75" Width="1.5" />
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
       <Compartment Name="Properties" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAIAAIAAAAAAACAAAAAAAAABAAIAAAAAAAQ=</HashCode>
+      <HashCode>EAQBAAABAAIAEAQAAQBIBCgAwAAAgQGDAgJAAAIIQCQ=</HashCode>
       <FileName>ViewModels\ContentViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DockerbaseWPF.ViewModels.DockerViewModel">
-    <Position X="13.5" Y="5" Width="1.5" />
+    <Position X="12.5" Y="6.75" Width="1.5" />
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
       <Compartment Name="Properties" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>AAAAAIAAEAAAAAAAAgAAIQQAAAIAAAAAAAAAAAAEAAA=</HashCode>
+      <HashCode>AAAAAAAAEAAAAAAAAgAAIQAAAAIAIAAAAAAAAAAEAAA=</HashCode>
       <FileName>ViewModels\DockerViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DockerbaseWPF.ViewModels.LoginViewModel">
-    <Position X="7" Y="4.5" Width="1.5" />
+    <Position X="7.25" Y="6.75" Width="1.5" />
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
       <Compartment Name="Properties" Collapsed="true" />
@@ -82,7 +94,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="DockerbaseWPF.ViewModels.MenuViewModel">
-    <Position X="11.25" Y="4.75" Width="1.5" />
+    <Position X="10.75" Y="6.75" Width="1.5" />
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
       <Compartment Name="Properties" Collapsed="true" />
@@ -93,7 +105,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="DockerbaseWPF.ViewModels.Messenger">
-    <Position X="7.25" Y="0.75" Width="1.5" />
+    <Position X="3.75" Y="6.75" Width="1.5" />
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
       <Compartment Name="Properties" Collapsed="true" />
@@ -111,7 +123,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="DockerbaseWPF.ViewModels.RelayCommand">
-    <Position X="11" Y="0.75" Width="1.5" />
+    <Position X="14.25" Y="6.75" Width="1.5" />
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
     </Compartments>
@@ -122,7 +134,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="DockerbaseWPF.ViewModels.ViewModelBase">
-    <Position X="9" Y="2.75" Width="1.5" />
+    <Position X="9" Y="4.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAIAAAAAAAgAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ViewModels\ViewModelBase.cs</FileName>
@@ -130,36 +142,55 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="DockerbaseWPF.Views.AddDatabase" BaseTypeListCollapsed="true">
-    <Position X="3.75" Y="0.75" Width="1.5" />
+    <Position X="3.75" Y="1.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
       <FileName>Views\AddDatabaseView.xaml.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="AddDatabaseViewModel" />
+    </ShowAsAssociation>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="DockerbaseWPF.Views.ContentView" BaseTypeListCollapsed="true">
-    <Position X="5.5" Y="0.75" Width="1.5" />
+    <Position X="5.5" Y="1.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Views\ContentView.xaml.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ContentViewModel" />
+    </ShowAsAssociation>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="DockerbaseWPF.Views.MenuView" BaseTypeListCollapsed="true">
-    <Position X="3.75" Y="2.5" Width="1.5" />
+    <Position X="3.75" Y="3" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Views\MenuView.xaml.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="MenuViewModel" />
+    </ShowAsAssociation>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="DockerbaseWPF.Views.UserLoginView" BaseTypeListCollapsed="true">
-    <Position X="5.5" Y="2.25" Width="1.5" />
+    <Position X="5.5" Y="2.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAQAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAA=</HashCode>
       <FileName>Views\UserLoginView.xaml.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="LoginViewModel" />
+    </ShowAsAssociation>
     <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="DatabaseService" Collapsed="true">
+    <Position X="14.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>Models\DatabaseService.cs</FileName>
+    </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>
